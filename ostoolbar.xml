@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.0" method="upgrade">
+	<name>COM_OSTOOLBAR</name>
+	<creationDate>January 2011</creationDate>
+	<author>OSTraining</author>
+	<copyright>None</copyright>
+	<authorEmail>thanh@ostraining.com</authorEmail>
+	<authorUrl>ostraining.com</authorUrl>
+	<version>1.5.10</version>
+
+	<files folder="site">
+		<filename>controller.php</filename>
+		<filename>index.html</filename>
+		<filename>ostoolbar.php</filename>
+		<folder>assets</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+	</files>
+
+	<administration>
+		<menu img="components/com_ostoolbar/assets/images/ost_icon.png">COM_OSTOOLBAR</menu>
+		<files folder="admin">
+			<filename>ostoolbar.php</filename>
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>index.html</filename>
+			<folder>assets</folder>
+			<folder>base</folder>
+			<folder>helpers</folder>
+			<folder>models</folder>
+			<folder>rest</folder>
+			<folder>views</folder>
+			<folder>language</folder>
+    	</files>
+	</administration>
+
+	<scriptfile>script.ostoolbar.php</scriptfile>
+
+	<updateservers>
+		<server type="extension" priority="1" name="OSToolbar Updates"><![CDATA[http://updates.ostraining.com/ostoolbar.xml]]></server>
+	</updateservers>
+</extension>
