@@ -2,9 +2,9 @@
 // No direct access
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controllerLegacy');
+jimport('joomla.application.component.controller');
 
-class OSToolbarController extends JControllerLegacy
+class OSToolbarController extends JController
 {
 	protected $default_view = "tutorials";
 	

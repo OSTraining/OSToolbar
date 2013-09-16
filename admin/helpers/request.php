@@ -3,12 +3,12 @@ defined('_JEXEC') or die;
 
 class OSToolbarRequestHelper {
 	
-	static  $host_url		= 'http://www.ostraining.com/index.php?option=com_api&v=3.0';
+	static  $host_url		= 'http://www.ostraining.com/index.php?option=com_api&v=1.6';
 	static $isTrial = false;
 	
 	public function isTrial()
 	{
-		self::$host_url = "http://www.ostraining.com/index.php?option=com_api&v=3.0_trial";
+		self::$host_url = "http://www.ostraining.com/index.php?option=com_api&v=1.6_trial";
 		self::$isTrial = true;
 	}
 	
@@ -40,7 +40,7 @@ class OSToolbarRequestHelper {
 				$response->setErrorMsg($body->message);
 			endif;
 		endif;
-
+		
 		return $response;
 	}
 	

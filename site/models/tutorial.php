@@ -1,8 +1,8 @@
 <?php 
 defined('_JEXEC') or die;
-jimport('joomla.application.component.modellegacy');
+jimport('joomla.application.component.model');
 
-class OSToolbarModelTutorial extends JModelLegacy {
+class OSToolbarModelTutorial extends JModel {
 
   	protected function populateState() {
     	$app = JFactory::getApplication();

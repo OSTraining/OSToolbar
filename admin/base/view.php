@@ -3,7 +3,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class OSToolbarView extends JViewLegacy {
+class OSToolbarView extends JView {
 
 	protected $option	= null;
 	protected $view		= null;

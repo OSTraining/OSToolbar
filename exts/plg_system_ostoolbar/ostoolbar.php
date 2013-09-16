@@ -26,7 +26,7 @@ class plgSystemOsToolbar extends JPlugin
 		");
 		
 		$bar = JToolBar::getInstance('toolbar');
-		$bar->appendButton('Popup', 'tutorial', JText::_("Tutorials"), 'index.php?option=com_ostoolbar&amp;view=tutorials&amp;tmpl=component', 600, 400, 0, 0, '');
+		$bar->appendButton('Popup', 'tutorial', JText::_("Tutorials"), 'index.php?option=com_ostoolbar&amp;view=tutorials&amp;tmpl=component', 900, 600, 0, 0, '');
 	}
 
 

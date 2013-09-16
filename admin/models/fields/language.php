@@ -72,8 +72,8 @@ class JFormFieldLanguage extends JFormField
 		
 		$default_lang 		= $languages[0]->element;
 		$file 				= $default_lang . ".com_ostoolbar.ini";
-		$com_path 			= JPATH_SITE."/administrator/components/com_ostoolbar";
-		$default_lang_file	= JPath::clean($com_path."/language/".$default_lang."/".$file);
+		$com_path 			= JPATH_SITE.DS."administrator".DS."components".DS."com_ostoolbar";
+		$default_lang_file	= JPath::clean($com_path.DS."language".DS.$default_lang.DS.$file);
 
 		if (!JFile::exists($default_lang_file))
 		{
@@ -81,7 +81,7 @@ class JFormFieldLanguage extends JFormField
 			foreach ($languages as $language)
 			{
 				$default_lang = $language->element;
-				$lang_file = JPath::clean($com_path."/language/".$language->element."/".$language->element.".com_ostoolbar.ini");
+				$lang_file = JPath::clean($com_path.DS."language".DS.$language->element.DS.$language->element.".com_ostoolbar.ini");
 				if (JFile::exists($lang_file)) 
 					break;
 			}
@@ -93,12 +93,12 @@ class JFormFieldLanguage extends JFormField
 		foreach ($languages as $language)
 		{
 			$translates[$language->element] = array();
-			$lang_file = JPath::clean($com_path."/language/".$language->element."/".$language->element.".com_ostoolbar.ini");
-			$system_lang_file = JPath::clean($com_path."/language/".$language->element."/".$language->element.".com_ostoolbar.sys.ini");
-			$plg_lang_file = JPath::clean(JPATH_ADMINISTRATOR."/language/".$language->element."/".$language->element.".plg_quickicon_ostoolbar.ini");
-			$plg_sys_lang_file = JPath::clean(JPATH_ADMINISTRATOR."/language/".$language->element."/".$language->element.".plg_quickicon_ostoolbar.sys.ini");
-			$sys_plg_lang_file = JPath::clean(JPATH_ADMINISTRATOR."/language/".$language->element."/".$language->element.".plg_system_ostoolbar.ini");
-			$sys_plg_sys_lang_file = JPath::clean(JPATH_ADMINISTRATOR."/language/".$language->element."/".$language->element.".plg_system_ostoolbar.sys.ini");
+			$lang_file = JPath::clean($com_path.DS."language".DS.$language->element.DS.$language->element.".com_ostoolbar.ini");
+			$system_lang_file = JPath::clean($com_path.DS."language".DS.$language->element.DS.$language->element.".com_ostoolbar.sys.ini");
+			$plg_lang_file = JPath::clean(JPATH_ADMINISTRATOR.DS."language".DS.$language->element.DS.$language->element.".plg_quickicon_ostoolbar.ini");
+			$plg_sys_lang_file = JPath::clean(JPATH_ADMINISTRATOR.DS."language".DS.$language->element.DS.$language->element.".plg_quickicon_ostoolbar.sys.ini");
+			$sys_plg_lang_file = JPath::clean(JPATH_ADMINISTRATOR.DS."language".DS.$language->element.DS.$language->element.".plg_system_ostoolbar.ini");
+			$sys_plg_sys_lang_file = JPath::clean(JPATH_ADMINISTRATOR.DS."language".DS.$language->element.DS.$language->element.".plg_system_ostoolbar.sys.ini");
 			$editable = array("COM_OSTOOLBAR");
 			$translates[$language->element]["sys"] = $this->loadLanguage($system_lang_file, $editable);
 			$editable = array("PLG_QUICKICON_OSTOOLBAR");

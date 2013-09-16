@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.0" type="plugin" group="system">
+<extension version="2.5" type="plugin" group="system">
 	<name>plg_system_ostoolbar</name>
 	<author>OSTraining</author>
 	<creationDate>Mar 2012</creationDate>
@@ -7,7 +7,7 @@
 	<license></license>
 	<authorEmail>thanh@ostraining.com</authorEmail>
 	<authorUrl>www.ostraining.com</authorUrl>
-	<version>1.5.8</version>
+	<version>1.0.0</version>
 	<description>PLG_OSTOOLBAR_XML_DESCRIPTION</description>
 	<files>
 		<filename plugin="ostoolbar">ostoolbar.php</filename>

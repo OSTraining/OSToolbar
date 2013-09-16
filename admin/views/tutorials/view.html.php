@@ -9,7 +9,7 @@ class OSToolbarViewTutorials extends OSToolbarView {
 		
 		$this->generateToolbar();
 		
-		$model		= JModelLegacy::getInstance('Tutorials', 'OSToolbarModel');
+		$model		= JModel::getInstance('Tutorials', 'OSToolbarModel');
 		
 		if (JRequest::getVar('session', 0) && JRequest::getVar('tmpl', '') == 'component') :
 			$session	= JFactory::getSession();

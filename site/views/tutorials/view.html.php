@@ -1,9 +1,9 @@
 <?php
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-jimport( 'joomla.application.component.viewlegacy');
+jimport( 'joomla.application.component.view');
 
-class OSToolbarViewTutorials extends JViewLegacy
+class OSToolbarViewTutorials extends JView
 {
 	var $items;
 	function display($tpl = null)

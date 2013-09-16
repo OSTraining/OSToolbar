@@ -15,12 +15,10 @@ class plgQuickiconOSToolbar extends JPlugin
 			return;
 		}
 
-		$doc = JFactory::getDocument();
-		$doc->addStyleDeclaration(".icon-ostoolbar{background:url(../media/plg_quickicon_ostoolbar/images/ost_icon_16.png)}");
 
 		return array(array(
 			'link' => 'index.php?option=com_ostoolbar',
-			'image' => 'ostoolbar',
+			'image' => 'plg_quickicon_ostoolbar/ost_icon_24.png',
 			'text' => JText::_('PLG_QUICKICON_OSTOOLBAR'),
 			'id' => 'plg_quickicon_ostoolbar'
 		));

@@ -49,7 +49,8 @@ class OSToolbarHelper {
 		$html = "<div class='header ".$class."'>\n";
 		$html .= "<span class='header_text'>".$text."</span>\n";
 		$html .= "</div>\n";
-		JToolbarHelper::title($html);
+		
+		$app = JFactory::getApplication()->set('JComponentTitle', $html);
 	}
 	
 	public static function customButton($text, $class, $id, $link) {

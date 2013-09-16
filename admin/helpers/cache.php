@@ -38,8 +38,8 @@ class OSToolbarCacheHelper {
 	public static function callback($object, $method, $args=array(), $cache_lifetime=null, $overrideConfig=false) {
 		
 		$conf 			= JFactory::getConfig();
-		$cacheactive 	= $conf->get('config.caching');
-		$cachetime		= $conf->get('config.cachetime');
+		$cacheactive 	= $conf->getValue('config.caching');
+		$cachetime		= $conf->getValue('config.cachetime');
 		
 		$cache= & JFactory::getCache(self::CACHE_GROUP,'callback');
 

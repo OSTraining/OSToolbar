@@ -1,8 +1,8 @@
 <?php 
 defined('_JEXEC') or die;
-jimport('joomla.application.component.modellegacy');
+jimport('joomla.application.component.model');
 
-class OSToolbarModelTutorials extends JModellegacy {
+class OSToolbarModelTutorials extends JModel {
 
 		
 	public function getList() {

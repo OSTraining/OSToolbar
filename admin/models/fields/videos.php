@@ -16,9 +16,9 @@ class JFormFieldVideos extends JFormField
 		JLoader::register('JRestRequest', JPATH_SITE.'/administrator/components/com_ostoolbar//rest/request.php');
 		JLoader::register('OSToolbarModel', JPATH_SITE.'/administrator/components/com_ostoolbar/base/model.php');
 
-		JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR."/components/com_ostoolbar/models");
+		JModel::addIncludePath(JPATH_ADMINISTRATOR.DS."components".DS."com_ostoolbar".DS."models");
 
-		$model		= JModelLegacy::getInstance('Tutorials', 'OSToolbarModel');
+		$model		= JModel::getInstance('Tutorials', 'OSToolbarModel');
 		$available = $model->getList(true);
 		if (OSToolbarRequestHelper::$isTrial)
 		{
@@ -54,8 +54,11 @@ class JFormFieldVideos extends JFormField
 			}
 		endfor;
 		
+
 		$document = JFactory::getDocument();
-		$document->addScript('http://code.jquery.com/ui/1.10.0/jquery-ui.js');
+		$document->addScript(JURI::root().'administrator/components/com_ostoolbar/assets/js/jquery-1.4.2.min.js');
+		//$document->addScript(JURI::root().'administrator/components/com_ostoolbar/assets/js/jquery.simpletip-1.3.1.min.js');
+		$document->addScript(JURI::root().'administrator/components/com_ostoolbar/assets/js/jquery-ui-1.8.6.custom.min.js');
 		$document->addStyleSheet(JURI::root().'administrator/components/com_ostoolbar/assets/css/ui-lightness/jquery-ui-1.8.6.custom.css'); 
 		$document->addStyleDeclaration("#jform_videos-lbl{display:none}
 				#sortable1, #sortable2 {
@@ -81,7 +84,7 @@ class JFormFieldVideos extends JFormField
 				}
 			");
 		$document->addScriptDeclaration("
-		
+			
 			jQuery(function() {
 				jQuery('#sortable1, #sortable2').sortable({
 					connectWith: '.connectedSortable'

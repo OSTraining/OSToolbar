@@ -21,7 +21,7 @@ $doc->addStyleSheet(JURI::Root(). "components/com_ostoolbar/assets/css/ostoolbar
 
 
 jimport('joomla.application.component.controller');
-$controller = JControllerLegacy::getInstance('ostoolbar');
+$controller = JController::getInstance('ostoolbar');
 $controller->execute( JRequest::getCmd( 'task') );
 $controller->redirect();
 ?>
