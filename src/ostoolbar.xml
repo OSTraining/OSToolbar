@@ -10,7 +10,6 @@
 
     <files folder="site">
         <filename>controller.php</filename>
-        <filename>index.html</filename>
         <filename>ostoolbar.php</filename>
         <folder>assets</folder>
         <folder>models</folder>
@@ -23,7 +22,6 @@
             <filename>ostoolbar.php</filename>
             <filename>access.xml</filename>
             <filename>config.xml</filename>
-            <filename>index.html</filename>
             <folder>assets</folder>
             <folder>base</folder>
             <folder>helpers</folder>
