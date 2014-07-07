@@ -3,12 +3,12 @@ defined('_JEXEC') or die;
 
 class OSToolbarRequestHelper
 {
-    public static $host_url = 'http://www.ostraining.com/index.php?option=com_api&v=3.0';
+    public static $host_url = 'https://www.ostraining.com/index.php?option=com_api&v=3.0';
     public static $isTrial = false;
 
     public function isTrial()
     {
-        self::$host_url = "http://www.ostraining.com/index.php?option=com_api&v=3.0_trial";
+        self::$host_url = "https://www.ostraining.com/index.php?option=com_api&v=3.0_trial";
         self::$isTrial  = true;
     }
 
@@ -26,11 +26,20 @@ class OSToolbarRequestHelper
 
         $data = array_merge($data, $static_data);
 
-        $response = JRestRequest::send(self::$host_url, $data);
+        $response = JRestRequest::send(
+            self::$host_url,
+            $data,
+            'POST',
+            array(
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_MAXREDIRS => 1,
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_SSL_VERIFYHOST => false
+            )
+        );
         if ($body = $response->getBody()) {
             $response->setBody(json_decode($body));
         }
-
 
         if ($response->hasError()) {
             $body = $response->getBody();
