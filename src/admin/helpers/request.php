@@ -6,7 +6,7 @@ abstract class OSToolbarRequestHelper
     public static $host_url = 'https://www.ostraining.com/index.php?option=com_api&v=3.0';
     public static $isTrial = false;
 
-    public function isTrial()
+    public static function isTrial()
     {
         self::$host_url = "https://www.ostraining.com/index.php?option=com_api&v=3.0_trial";
         self::$isTrial  = true;
