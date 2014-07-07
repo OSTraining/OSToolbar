@@ -1,7 +1,7 @@
 <?php
 defined('_JEXEC') or die;
 
-class OSToolbarRequestHelper
+abstract class OSToolbarRequestHelper
 {
     public static $host_url = 'https://www.ostraining.com/index.php?option=com_api&v=3.0';
     public static $isTrial = false;
@@ -12,7 +12,7 @@ class OSToolbarRequestHelper
         self::$isTrial  = true;
     }
 
-    public function makeRequest($data)
+    public static function makeRequest($data)
     {
         $cparams     = JComponentHelper::getParams('com_ostoolbar');
         $static_data = array(
@@ -32,7 +32,7 @@ class OSToolbarRequestHelper
             'POST',
             array(
                 CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_MAXREDIRS => 1,
+                CURLOPT_MAXREDIRS      => 1,
                 CURLOPT_SSL_VERIFYPEER => false,
                 CURLOPT_SSL_VERIFYHOST => false
             )
