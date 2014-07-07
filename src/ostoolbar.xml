@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5.5" method="upgrade">
     <name>COM_OSTOOLBAR</name>
-    <creationDate>January 22, 2014</creationDate>
+    <creationDate>July 07 2014</creationDate>
     <author>OSTraining</author>
     <copyright>None</copyright>
     <authorEmail>support@ostraining.com</authorEmail>
