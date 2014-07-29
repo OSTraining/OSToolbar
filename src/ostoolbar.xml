@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5.5" method="upgrade">
     <name>COM_OSTOOLBAR</name>
-    <creationDate>July 07 2014</creationDate>
+    <creationDate>July 29 2014</creationDate>
     <author>OSTraining</author>
     <copyright>None</copyright>
     <authorEmail>support@ostraining.com</authorEmail>
     <authorUrl>ostraining.com</authorUrl>
-    <version>1.5.11</version>
+    <version>1.5.12</version>
 
     <files folder="site">
         <filename>controller.php</filename>

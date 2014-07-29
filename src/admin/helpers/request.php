@@ -3,12 +3,24 @@ defined('_JEXEC') or die;
 
 abstract class OSToolbarRequestHelper
 {
-    public static $host_url = 'https://www.ostraining.com/index.php?option=com_api&v=3.0';
+    public static $host_url = 'https://www.ostraining.com/';
     public static $isTrial = false;
+
+    public static function getHostUrl()
+    {
+        $version = version_compare(JVERSION, '3', 'ge') ? '3.0' : '1.6';
+        $trial   = self::$isTrial ? '_trial' : '';
+
+        $vars = array(
+            'option' => 'com_api',
+            'v'      => $version . $trial
+        );
+
+        return self::$host_url . 'index.php?' . http_build_query($vars);
+    }
 
     public static function isTrial()
     {
-        self::$host_url = "https://www.ostraining.com/index.php?option=com_api&v=3.0_trial";
         self::$isTrial  = true;
     }
 
@@ -27,7 +39,7 @@ abstract class OSToolbarRequestHelper
         $data = array_merge($data, $static_data);
 
         $response = JRestRequest::send(
-            self::$host_url,
+            self::getHostUrl(),
             $data,
             'POST',
             array(
@@ -56,7 +68,7 @@ abstract class OSToolbarRequestHelper
 
     public static function filter($text)
     {
-        $split   = explode('index.php', self::$host_url);
+        $split   = explode('index.php', self::getHostUrl());
         $ost_url = $split[0];
 
         $text = preg_replace('#(href|src)="([^:"]*)("|(?:(?:%20|\s|\+)[^"]*"))#', '$1="' . $ost_url . '$2$3', $text);

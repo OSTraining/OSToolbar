@@ -5,10 +5,10 @@
         <description>OSToolbar for Joomla</description>
         <element>com_ostoolbar</element>
         <type>component</type>
-        <version>1.5.11</version>
+        <version>1.5.12</version>
         <infourl title="OS Training">https://www.ostraining.com/</infourl>
         <downloads>
-            <downloadurl type="full" format="zip">http://updates.ostraining.com/packages/com_ostoolbar/com_ostoolbar_1.5.11.zip</downloadurl>
+            <downloadurl type="full" format="zip">http://updates.ostraining.com/packages/com_ostoolbar/com_ostoolbar_1.5.12.zip</downloadurl>
         </downloads>
         <tags>
             <tag>stable</tag>
