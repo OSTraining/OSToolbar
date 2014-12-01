@@ -35,7 +35,6 @@
     <scriptfile>script.ostoolbar.php</scriptfile>
 
     <updateservers>
-        <server type="extension" priority="1" name="OSToolbar Updates">
-            <![CDATA[http://updates.ostraining.com/ostoolbar.xml]]></server>
+        <server type="extension" priority="1" name="OSToolbar Updates"><![CDATA[http://updates.ostraining.com/ostoolbar.xml]]></server>
     </updateservers>
 </extension>
