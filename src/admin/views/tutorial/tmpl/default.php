@@ -8,16 +8,8 @@
 
 defined('_JEXEC') or die();
 
-if ($showAd = !empty($this->row->jversion)) {
-    $showAd = in_array($this->row->jversion, array("1.6_trial"));
-}
 ?>
 <div class="ostoolbar">
-    <?php if ($showAd): ?>
-        <iframe src="http://www.ostraining.com/services/adv/adv1.html" width="734px" height="80px"
-                style="padding-left:10px"></iframe>
-    <?php endif; ?>
-
     <fieldset class='adminform'>
         <legend><?php echo $this->row->title; ?></legend>
         <form action="index.php" method="post" name='adminForm'>
