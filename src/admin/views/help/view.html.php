@@ -16,7 +16,7 @@ class OSToolbarViewHelp extends OSToolbarView {
 		}
 		*/
 
-		$row	= OSToolbarCacheHelper::callback($this, '_fetchData', array(), OSToolbarCacheHelper::HOUR, true);
+		$row	= OstoolbarCache::callback($this, '_fetchData', array(), OstoolbarCache::HOUR, true);
 
 		if ($row == false)
 		{

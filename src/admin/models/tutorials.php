@@ -57,7 +57,7 @@ class OstoolbarModelTutorials extends OstoolbarModel
 
     public function getList($all = false)
     {
-        $this->data = OSToolbarCacheHelper::callback($this, '_fetchList', array(), null, true);
+        $this->data = OstoolbarCache::callback($this, '_fetchList', array(), null, true);
 
         $params   = JComponentHelper::getParams('com_ostoolbar');
         $selected = array();

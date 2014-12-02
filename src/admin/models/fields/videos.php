@@ -1,63 +1,46 @@
 <?php
 defined('JPATH_BASE') or die;
 
+require_once JPATH_ADMINISTRATOR . '/components/com_ostoolbar/library/include.php';
+
 class JFormFieldVideos extends JFormField
 {
-	protected $type = 'Videos';
+    protected $type = 'Videos';
 
-	protected function getInput()
-	{
-		JLoader::register('OSToolbarSystem', JPATH_SITE.'/administrator/components/com_ostoolbar/helpers/system.php');
-		$check = OSToolbarSystem::check();
+    protected function getInput()
+    {
+        OSToolbarSystem::check();
 
-		JLoader::register('OstoolbarHelper', JPATH_SITE.'/administrator/components/com_ostoolbar//helpers/helper.php');
-		JLoader::register('OSToolbarRequestHelper', JPATH_SITE.'/administrator/components/com_ostoolbar//helpers/request.php');
-		JLoader::register('OSToolbarCacheHelper', JPATH_SITE.'/administrator/components/com_ostoolbar//helpers/cache.php');
-		JLoader::register('JRestRequest', JPATH_SITE.'/administrator/components/com_ostoolbar//rest/request.php');
-		JLoader::register('OSToolbarModel', JPATH_SITE.'/administrator/components/com_ostoolbar/base/model.php');
+        $model = JModelLegacy::getInstance('Tutorials', 'OSToolbarModel');
+        $available = $model->getList(true);
+        if (OSToolbarRequestHelper::$isTrial) {
+            $document = JFactory::getDocument();
+            $document->addStyleDeclaration("#jform_videos-lbl{display:none}");
+            return JText::_('COM_OSTOOLBAR_API_KEY_ERROR');
+        }
 
-		JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR."/components/com_ostoolbar/models");
+        if ($this->value) {
+            $selected = preg_split("/,/", $this->value);
+        } else {
+            $selected = array();
+        }
 
-		$model		= JModelLegacy::getInstance('Tutorials', 'OSToolbarModel');
-		$available = $model->getList(true);
-		if (OSToolbarRequestHelper::$isTrial)
-		{
-			$document = JFactory::getDocument();
-			$document->addStyleDeclaration("#jform_videos-lbl{display:none}");
-			return JText::_('COM_OSTOOLBAR_API_KEY_ERROR');
-		}
+        $empty = count($selected) ? false : true;
 
-		/*
-		$data	= array('resource' => 'articles');
-		$response = OSToolbarRequestHelper::makeRequest($data);
+        for ($i = 0; $i < count($available); $i++) :
+            $available[$i]->link = 'index.php?option=com_ostoolbar&view=tutorial&id=' . $available[$i]->id;
+            if ($empty) {
+                $selected[] = "s_" . $available[$i]->id;
+            }
+        endfor;
 
-		$available	= $response->getBody();
-		if ($response->hasError())
-		{
-			$document = JFactory::getDocument();
-			$document->addStyleDeclaration("#jform_videos-lbl{display:none}");
-			return JText::_('COM_OSTOOLBAR_API_KEY_ERROR');
-		}
-		*/
-
-		if ($this->value)
-			$selected = preg_split("/,/",$this->value);
-		else $selected = array();
-
-		$empty = count($selected) ? false : true;
-
-		for($i=0; $i<count($available); $i++) :
-			$available[$i]->link = 'index.php?option=com_ostoolbar&view=tutorial&id='.$available[$i]->id;
-			if ($empty)
-			{
-				$selected[] = "s_".$available[$i]->id;
-			}
-		endfor;
-
-		$document = JFactory::getDocument();
-		$document->addScript('http://code.jquery.com/ui/1.10.0/jquery-ui.js');
-		$document->addStyleSheet(JURI::root().'administrator/components/com_ostoolbar/assets/css/ui-lightness/jquery-ui-1.8.6.custom.css');
-		$document->addStyleDeclaration("#jform_videos-lbl{display:none}
+        $document = JFactory::getDocument();
+        $document->addScript('http://code.jquery.com/ui/1.10.0/jquery-ui.js');
+        $document->addStyleSheet(
+            JURI::root() . 'administrator/components/com_ostoolbar/assets/css/ui-lightness/jquery-ui-1.8.6.custom.css'
+        );
+        $document->addStyleDeclaration(
+            "#jform_videos-lbl{display:none}
 				#sortable1, #sortable2 {
 					width:250px;
 					float:left;
@@ -79,8 +62,10 @@ class JFormFieldVideos extends JFormField
 					margin-top:1px;
 					cursor:pointer;
 				}
-			");
-		$document->addScriptDeclaration("
+			"
+        );
+        $document->addScriptDeclaration(
+            "
 
 			jQuery(function() {
 				jQuery('#sortable1, #sortable2').sortable({
@@ -90,7 +75,7 @@ class JFormFieldVideos extends JFormField
 				function updateSortableField() {
 					var selected = jQuery('#sortable2').sortable('toArray');
 					var string	= selected.join(',');
-					jQuery('#".$this->id."_id').val(string);
+					jQuery('#" . $this->id . "_id').val(string);
 				}
 
 				jQuery('#sortable2').bind('sortupdate', function(event, ui) {
@@ -99,52 +84,54 @@ class JFormFieldVideos extends JFormField
 
 				updateSortableField();
 			});
-		");
+		"
+        );
 
-		ob_start();
-		?>
-        	<div>
-            	<div style="float:left; width:270px"><?php echo(JText::_("ORGINAL_VIDEOS"));?></div>
-            	<div style="float:left; width:50px">&nbsp;</div>
-            	<div style="float:left; width:250px"><?php echo(JText::_("COLLECTION"));?></div>
-                <div style="clear:both"></div>
-            </div>
-            <div class='sortable_holder'>
-                <ul id="sortable1" class="connectedSortable">
-                    <?php
-					$data = array();
-					for($i=0; $i<count($available); $i++) :
-                        $item	= $available[$i];
-                        $name	= $item->title;
-						if (in_array("s_".$item->id, $selected))
-						{
-							$data["s_".$item->id] = $item;
-							continue;
-						}
+        ob_start();
+        ?>
+        <div>
+            <div style="float:left; width:270px"><?php echo(JText::_("ORGINAL_VIDEOS")); ?></div>
+            <div style="float:left; width:50px">&nbsp;</div>
+            <div style="float:left; width:250px"><?php echo(JText::_("COLLECTION")); ?></div>
+            <div style="clear:both"></div>
+        </div>
+        <div class='sortable_holder'>
+            <ul id="sortable1" class="connectedSortable">
+                <?php
+                $data = array();
+                for ($i = 0; $i < count($available); $i++) :
+                    $item = $available[$i];
+                    $name = $item->title;
+                    if (in_array("s_" . $item->id, $selected)) {
+                        $data["s_" . $item->id] = $item;
+                        continue;
+                    }
                     ?>
-                        <li class="ui-state-default" id="s_<?php echo $item->id;?>"><?php echo $name; ?></li>
-                    <?php endfor; ?>
-                </ul>
-            	<div style="float:left; width:50px"><?php echo(JText::_("DRAP_DROP_TO_COLLECT"));?></div>
-                <ul id="sortable2" class="connectedSortable">
-                    <?php
-					for($i=0; $i<count($selected); $i++) :
-						if (!isset($data[$selected[$i]]))
-							continue;
-                        $item	= $data[$selected[$i]];
-                        $name	= $item->title."";
+                    <li class="ui-state-default" id="s_<?php echo $item->id; ?>"><?php echo $name; ?></li>
+                <?php endfor; ?>
+            </ul>
+            <div style="float:left; width:50px"><?php echo(JText::_("DRAP_DROP_TO_COLLECT")); ?></div>
+            <ul id="sortable2" class="connectedSortable">
+                <?php
+                for ($i = 0; $i < count($selected); $i++) :
+                    if (!isset($data[$selected[$i]])) {
+                        continue;
+                    }
+                    $item = $data[$selected[$i]];
+                    $name = $item->title . "";
                     ?>
-                        <li class="ui-state-highlight" id="s_<?php echo $item->id;?>"><?php echo $name; ?></li>
-                    <?php endfor; ?>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
+                    <li class="ui-state-highlight" id="s_<?php echo $item->id; ?>"><?php echo $name; ?></li>
+                <?php endfor; ?>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
 
 
-        	<input type="hidden" id="<?php echo($this->id);?>_id" name="<?php echo($this->name);?>" value="<?php echo($this->value);?>" />
+        <input type="hidden" id="<?php echo($this->id); ?>_id" name="<?php echo($this->name); ?>"
+               value="<?php echo($this->value); ?>"/>
         <?php
-		$input = ob_get_contents();
-		ob_end_clean();
-		return $input;
-	}
+        $input = ob_get_contents();
+        ob_end_clean();
+        return $input;
+    }
 }
