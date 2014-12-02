@@ -8,7 +8,7 @@
 
 defined('_JEXEC') or die();
 
-class OstoolbarHelper
+abstract class OstoolbarHelper
 {
     public static function adminInit()
     {
