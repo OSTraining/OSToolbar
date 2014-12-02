@@ -81,15 +81,15 @@ class OstoolbarController extends JControllerLegacy
         $db->setQuery($query);
         $languages = $db->loadObjectList();
 
-        $default_lang          = $languages[0]->element;
-        $file                  = $default_lang . ".com_ostoolbar.ini";
-        $com_path              = JPATH_SITE . "/administrator/components/com_ostoolbar";
-        $default_lang_file     = JPath::clean($com_path . "/language/" . $default_lang . "/" . $file);
+        $default_lang      = $languages[0]->element;
+        $file              = $default_lang . ".com_ostoolbar.ini";
+        $com_path          = JPATH_SITE . "/administrator/components/com_ostoolbar";
+        $default_lang_file = JPath::clean($com_path . "/language/" . $default_lang . "/" . $file);
 
         if (!JFile::exists($default_lang_file)) {
             // Find available lang file if default language doesn't have language file
             foreach ($languages as $language) {
-                $default_lang_file     = JPath::clean(
+                $default_lang_file = JPath::clean(
                     $com_path . "/language/" . $language->element . "/" . $language->element . ".com_ostoolbar.ini"
                 );
                 if (JFile::exists($default_lang_file)) {
@@ -98,25 +98,25 @@ class OstoolbarController extends JControllerLegacy
             }
         }
 
-        $default_lang              = "en-GB"; // Hard code
-        $default_lang_file         = JPath::clean(
+        $default_lang          = "en-GB"; // Hard code
+        $default_lang_file     = JPath::clean(
             $com_path . "/language/" . $default_lang . "/" . $default_lang . ".com_ostoolbar.ini"
         );
-        $default_sys_lang_file     = JPath::clean(
+        $default_sys_lang_file = JPath::clean(
             $com_path . "/language/" . $default_lang . "/" . $default_lang . ".com_ostoolbar.sys.ini"
         );
-        $default_plg_lang_file     = JPath::clean(
+        $default_plg_lang_file = JPath::clean(
             JPATH_ADMINISTRATOR . "/language/" . $default_lang . "/" . $default_lang . ".plg_quickicon_ostoolbar.ini"
         );
 
         foreach ($languages as $language) {
-            $lang_file                = JPath::clean(
+            $lang_file        = JPath::clean(
                 $com_path . "/language/" . $language->element . "/" . $language->element . ".com_ostoolbar.ini"
             );
-            $system_lang_file         = JPath::clean(
+            $system_lang_file = JPath::clean(
                 $com_path . "/language/" . $language->element . "/" . $language->element . ".com_ostoolbar.sys.ini"
             );
-            $plg_lang_file            = JPath::clean(
+            $plg_lang_file    = JPath::clean(
                 JPATH_ADMINISTRATOR . "/language/" . $language->element . "/" . $language->element . ".plg_quickicon_ostoolbar.ini"
             );
 

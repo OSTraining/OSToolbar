@@ -39,9 +39,9 @@ abstract class OstoolbarHelper
 
         $lines = preg_split("/\s*\\n\s*/", $string);
         for ($i = 0; $i < count($lines); $i++) :
-            $line = $lines[$i];
+            $line  = $lines[$i];
             $split = preg_split("/\s*=\s*/", $line);
-            $key = isset($split[0]) ? $split[0] : null;
+            $key   = isset($split[0]) ? $split[0] : null;
             $value = isset($split[1]) ? $split[1] : null;
             if ($key !== null && $value !== null) :
                 $params[$key] = $value;

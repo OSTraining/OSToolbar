@@ -1,16 +1,16 @@
 <?php
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
 
-jimport( 'joomla.application.component.viewlegacy');
+jimport('joomla.application.component.viewlegacy');
 
 class OSToolbarViewTutorial extends JViewLegacy
 {
-	var $item;
-	function display($tpl = null)
-	{
-		$this->item		= $this->get("Data");
+    var $item;
 
-		parent::display($tpl);
-	}
+    function display($tpl = null)
+    {
+        $this->item = $this->get("Data");
+
+        parent::display($tpl);
+    }
 }
-?>

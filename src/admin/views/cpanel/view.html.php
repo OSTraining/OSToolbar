@@ -3,18 +3,21 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class OSToolbarViewCpanel extends OSToolbarView {
+class OSToolbarViewCpanel extends OSToolbarView
+{
 
-	public function display($tpl = null) {
+    public function display($tpl = null)
+    {
 
-		if ($this->routeLayout($tpl)) :
-			return;
-		endif;
+        if ($this->routeLayout($tpl)) :
+            return;
+        endif;
 
-		JHTML::_('behavior.modal', 'a.modal');
+        JHTML::_('behavior.modal', 'a.modal');
 
 
-		JFactory::getDocument()->addScriptDeclaration("
+        JFactory::getDocument()->addScriptDeclaration(
+            "
 			window.addEvent('domready', function() {
 				if(window.location.hash == '#parameters') {
 					$('link_parameters').fireEvent('click');
@@ -28,27 +31,29 @@ class OSToolbarViewCpanel extends OSToolbarView {
 				}
 
 			});
-		");
+		"
+        );
 
-		$this->generateToolbar();
+        $this->generateToolbar();
 
-		$views 		= $this->getMainViews();
+        $views = $this->getMainViews();
 
-		/*
-		$params = JComponentHelper::getParams('com_ostoolbar');
-		if (!$params->get('api_key')) {
-			JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_ERROR'), 'error');
-		}
-		*/
+        /*
+        $params = JComponentHelper::getParams('com_ostoolbar');
+        if (!$params->get('api_key')) {
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_ERROR'), 'error');
+        }
+        */
 
-		$this->assignRef('views', $views);
-		$this->assignRef('modified', $modified);
+        $this->assignRef('views', $views);
+        $this->assignRef('modified', $modified);
 
-		parent::display($tpl);
-	}
+        parent::display($tpl);
+    }
 
-	private function generateToolbar() {
-		OstoolbarHelper::setPageTitle(JText::_('COM_OSTOOLBAR_CONTROL_PANEL'));
-	}
+    private function generateToolbar()
+    {
+        OstoolbarHelper::setPageTitle(JText::_('COM_OSTOOLBAR_CONTROL_PANEL'));
+    }
 
 }

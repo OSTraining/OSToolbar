@@ -11,7 +11,7 @@ class JFormFieldVideos extends JFormField
     {
         OSToolbarSystem::check();
 
-        $model = JModelLegacy::getInstance('Tutorials', 'OSToolbarModel');
+        $model     = JModelLegacy::getInstance('Tutorials', 'OSToolbarModel');
         $available = $model->getList(true);
         if (OSToolbarRequestHelper::$isTrial) {
             $document = JFactory::getDocument();

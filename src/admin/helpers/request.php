@@ -21,7 +21,7 @@ abstract class OSToolbarRequestHelper
 
     public static function isTrial()
     {
-        self::$isTrial  = true;
+        self::$isTrial = true;
     }
 
     public static function makeRequest($data)
