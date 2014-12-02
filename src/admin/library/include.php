@@ -16,10 +16,6 @@ if (!defined('OSTOOLBAR_LOADED')) {
     // Initiate auto-loader
     require_once OSTOOLBAR_ADMIN . '/library/joomla/loader.php';
 
-    // Include helpers
-    JLoader::register('OstoolbarSystem', OSTOOLBAR_ADMIN . '/helpers/system.php');
-    JLoader::register('JRestRequest', OSTOOLBAR_ADMIN . '/rest/request.php');
-
     $app = JFactory::getApplication();
     if ($app->input->getCmd('option', '') != 'com_ostoolbar') {
         switch ($app->getName()) {

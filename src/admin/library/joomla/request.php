@@ -45,7 +45,7 @@ abstract class OstoolbarRequest
 
         $data = array_merge($data, $static_data);
 
-        $response = JRestRequest::send(
+        $response = OstoolbarRestRequest::send(
             self::getHostUrl(),
             $data,
             'POST',

@@ -10,9 +10,8 @@
 
 defined('JPATH_BASE') or die();
 
-class JRestRequest
+class OstoolbarRestRequest
 {
-
     public static function send($url, $data = null, $method = 'GET', $curl_options = array())
     {
         $data   = self::prepareData($data);
@@ -20,26 +19,26 @@ class JRestRequest
 
         self::setCurlOption($handle, CURLOPT_RETURNTRANSFER, true, $curl_options);
 
-        if ($method == 'POST') :
+        if ($method == 'POST') {
             curl_setopt($handle, CURLOPT_POST, true);
-            if ($data) :
+            if ($data) {
                 curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
-            endif;
-        elseif ($method == 'GET') :
-            if (strpos($url, "?") !== false) :
+            }
+        } elseif ($method == 'GET') {
+            if (strpos($url, "?") !== false) {
                 $url .= "&" . $data;
-            else :
+            } else {
                 $url .= "?" . $data;
-            endif;
-        endif;
+            }
+        }
 
         curl_setopt($handle, CURLOPT_URL, $url);
 
-        if (!empty($curl_options)) :
-            foreach ($curl_options as $option => $value) :
+        if (!empty($curl_options)) {
+            foreach ($curl_options as $option => $value) {
                 curl_setopt($handle, $option, $value);
-            endforeach;
-        endif;
+            }
+        }
 
         $receive_headers = isset($curl_options[CURLOPT_HEADER]);
         $response        = new JRestResponse($handle, $receive_headers);
@@ -50,19 +49,19 @@ class JRestRequest
     private static function setCurlOption(&$handle, $name, $value, $curl_options = array())
     {
         $options = array_keys($curl_options);
-        if (in_array($name, $options)) :
+        if (in_array($name, $options)) {
             return false;
-        else :
+        } else {
             curl_setopt($handle, $name, $value);
             return true;
-        endif;
+        }
     }
 
     private static function prepareData($data)
     {
-        if (is_array($data)) :
+        if (is_array($data)) {
             $data = http_build_query($data);
-        endif;
+        }
         return $data;
     }
 
@@ -84,12 +83,12 @@ class JRestResponse
     {
         $response = curl_exec($handle);
 
-        if ($receive_headers) :
+        if ($receive_headers) {
             list($headers, $body) = explode("\r\n\r\n", $response, 2);
             $this->setHeaders($headers);
-        else :
+        } else {
             $body = $response;
-        endif;
+        }
 
         $this->setBody($body);
         $this->setInfo(curl_getinfo($handle));
@@ -103,27 +102,27 @@ class JRestResponse
         $this->error->code    = null;
         $this->error->message = null;
 
-        if (curl_errno($handle)) :
+        if (curl_errno($handle)) {
             $this->error->code    = curl_errno($handle);
             $this->error->message = curl_error($handle);
             return;
-        endif;
+        }
 
         $code = $this->getInfo('http_code');
-        if ($code >= 400 && $code < 600) :
+        if ($code >= 400 && $code < 600) {
             $this->error->code    = $code;
             $this->error->message = $this->getStatusMessage($code);
-        endif;
+        }
 
     }
 
     public function hasError()
     {
-        if ($this->error->code) :
+        if ($this->error->code) {
             return true;
-        else :
+        } else {
             return false;
-        endif;
+        }
     }
 
     public function getErrorCode()
@@ -174,15 +173,15 @@ class JRestResponse
 
     public function getInfo($key = null)
     {
-        if ($key) :
-            if (isset($this->info[$key])) :
+        if ($key) {
+            if (isset($this->info[$key])) {
                 return $this->info[$key];
-            else :
+            } else {
                 return null;
-            endif;
-        else :
+            }
+        } else {
             return $this->info;
-        endif;
+        }
     }
 
     public static function getStatusMessage($status)
@@ -230,11 +229,10 @@ class JRestResponse
             504 => 'Gateway Timeout',
             505 => 'HTTP Version Not Supported'
         );
-        if (isset($codes[$status])) :
+        if (isset($codes[$status])) {
             return $codes[$status];
-        else :
+        } else {
             return null;
-        endif;
+        }
     }
-
 }
