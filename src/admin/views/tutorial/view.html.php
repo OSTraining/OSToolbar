@@ -42,7 +42,7 @@ class OstoolbarViewTutorial extends OstoolbarViewAdmin
         parent::display($tpl);
     }
 
-    protected function setToolBar($addDivider = true)
+    protected function setToolBar($addDivider = false)
     {
         $this->setTitle();
 
@@ -51,6 +51,6 @@ class OstoolbarViewTutorial extends OstoolbarViewAdmin
             JText::_('COM_OSTOOLBAR_TUTORIALS'),
             'index.php?option=com_ostoolbar&view=tutorials'
         );
-        parent::setToolBar();
+        parent::setToolBar($addDivider);
     }
 }
