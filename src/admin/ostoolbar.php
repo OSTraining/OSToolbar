@@ -7,9 +7,9 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_ostoolbar')) {
 
 require_once JPATH_ADMINISTRATOR . '/components/com_ostoolbar/library/include.php';
 
-$check = OSToolbarSystem::check();
+$check = OstoolbarSystem::check();
 if ($check['pass'] == false) {
-    OSToolbarSystem::displayErrors($check['errors']);
+    OstoolbarSystem::displayErrors($check['errors']);
     return;
 }
 

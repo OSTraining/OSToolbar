@@ -23,7 +23,6 @@
             <filename>access.xml</filename>
             <filename>config.xml</filename>
             <folder>assets</folder>
-            <folder>helpers</folder>
             <folder>library</folder>
             <folder>models</folder>
             <folder>rest</folder>

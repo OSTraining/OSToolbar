@@ -9,7 +9,7 @@ class JFormFieldVideos extends JFormField
 
     protected function getInput()
     {
-        OSToolbarSystem::check();
+        OstoolbarSystem::check();
 
         $model     = JModelLegacy::getInstance('Tutorials', 'OSToolbarModel');
         $available = $model->getList(true);

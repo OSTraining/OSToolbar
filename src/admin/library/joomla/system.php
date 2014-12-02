@@ -1,6 +1,6 @@
 <?php
 
-abstract class OSToolbarSystem
+abstract class OstoolbarSystem
 {
     public static function check()
     {

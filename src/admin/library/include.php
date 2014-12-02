@@ -17,7 +17,7 @@ if (!defined('OSTOOLBAR_LOADED')) {
     require_once OSTOOLBAR_ADMIN . '/library/joomla/loader.php';
 
     // Include helpers
-    JLoader::register('OSToolbarSystem', OSTOOLBAR_ADMIN . '/helpers/system.php');
+    JLoader::register('OstoolbarSystem', OSTOOLBAR_ADMIN . '/helpers/system.php');
     JLoader::register('JRestRequest', OSTOOLBAR_ADMIN . '/rest/request.php');
 
     $app = JFactory::getApplication();
