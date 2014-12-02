@@ -1,9 +1,16 @@
 <?php
-defined('_JEXEC') or die;
+/**
+ * @package   com_ostoolbar
+ * @contact   www.ostraining.com, support@ostraining.com
+ * @copyright 2014 Open Source Training, LLC. All rights reserved
+ * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ */
+
+defined('_JEXEC') or die();
 
 class plgQuickiconOSToolbar extends JPlugin
 {
-    public function __construct(& $subject, $config)
+    public function __construct(&$subject, $config)
     {
         parent::__construct($subject, $config);
         $this->loadLanguage();
@@ -11,18 +18,16 @@ class plgQuickiconOSToolbar extends JPlugin
 
     public function onGetIcons($context)
     {
-        if ($context != $this->params->get('context', 'mod_quickicon') || !JFactory::getUser()->authorise(
-                'core.manage',
-                'com_installer'
-            )
+        if (
+            $context != $this->params->get('context', 'mod_quickicon')
+            || !JFactory::getUser()->authorise('core.manage', 'com_installer')
         ) {
-            return;
+            return array();
         }
 
-        $doc = JFactory::getDocument();
-        $doc->addStyleDeclaration(
-            ".icon-ostoolbar{background:url(../media/plg_quickicon_ostoolbar/images/ost_icon_16.png)}"
-        );
+        $image = '../media/plg_quickicon_ostoolbar/images/ost_icon_16.png';
+        JFactory::getDocument()
+            ->addStyleDeclaration(".icon-ostoolbar {background:url('{$image}')}");
 
         return array(
             array(

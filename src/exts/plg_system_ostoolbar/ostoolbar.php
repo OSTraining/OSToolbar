@@ -1,15 +1,18 @@
 <?php
-defined('JPATH_BASE') or die;
+/**
+ * @package   com_ostoolbar
+ * @contact   www.ostraining.com, support@ostraining.com
+ * @copyright 2014 Open Source Training, LLC. All rights reserved
+ * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ */
+
+defined('_JEXEC') or die();
 
 class plgSystemOsToolbar extends JPlugin
 {
-    function __construct(&$subject, $config)
-    {
-        parent::__construct($subject, $config);
+    protected $imageDir = 'administrator/components/com_ostoolbar/assets/images';
 
-    }
-
-    function onAfterDispatch()
+    public function onAfterDispatch()
     {
         $app = JFactory::getApplication();
 
@@ -17,17 +20,16 @@ class plgSystemOsToolbar extends JPlugin
             return;
         }
 
-        $option = JRequest::getVar("option");
-        if ($option == "com_ostoolbar") {
+        $option = $app->input->getCmd('option', '');
+        if ($option == 'com_ostoolbar') {
             return;
         }
 
-        $doc = JFactory::getDocument();
-        $doc->addStyleDeclaration(
-            ".icon-32-tutorial{background:url('" . JURI::root() . "administrator/components/com_ostoolbar/assets/images/icon-tutorials-small.png');width:46px !important;}
-		div.toolbar-list span {height:34px !important}
-		"
-        );
+        $image = JHtml::_('image', "{$this->imageDir}/icon-32-tutorials.png", null, null, false, true);
+        if ($image) {
+            JFactory::getDocument()
+                ->addStyleDeclaration(".icon-32-tutorial {background:url('{$image}');}");
+        }
 
         $bar = JToolBar::getInstance('toolbar');
         $bar->appendButton(
@@ -42,6 +44,4 @@ class plgSystemOsToolbar extends JPlugin
             ''
         );
     }
-
-
 }
