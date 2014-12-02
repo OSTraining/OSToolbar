@@ -10,13 +10,49 @@ defined('_JEXEC') or die();
 
 class com_ostoolbarInstallerScript
 {
-    public function update()
+    /**
+     * @param string                      $type
+     * @param JInstallerAdapterComponent $parent
+     *
+     * @return bool
+     */
+    public function preFlight($type, $parent)
     {
-        $this->uninstall();
-        $this->install();
+        if ($type == 'discover_install') {
+            JFactory::getApplication()->enqueueMessage('Discover Install is not available for this component', 'error');
+            return false;
+        }
+
+        return true;
     }
 
-    public function install()
+    /**
+     * @param JInstallAdapterComponent $parent
+     */
+    public function install($parent)
+    {
+        $this->uninstallRelated();
+        $this->installRelated();
+    }
+
+    /**
+     * @param JInstallAdapterComponent $parent
+     */
+    public function update($parent)
+    {
+        $this->uninstallRelated();
+        $this->installRelated();
+    }
+
+    /**
+     * @param JInstallAdapterComponent $parent
+     */
+    public function uninstall($parent)
+    {
+        $this->uninstallRelated();
+    }
+
+    public function installRelated()
     {
         $cache = JFactory::getCache('com_ostoolbar', 'callback');
         $cache->clean();
@@ -62,7 +98,7 @@ class com_ostoolbarInstallerScript
 
     }
 
-    public function uninstall()
+    public function uninstallRelated()
     {
         $db        = JFactory::getDBO();
         $installer = new JInstaller;
