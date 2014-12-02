@@ -10,11 +10,48 @@ abstract class OstoolbarViewAdmin extends JViewLegacy
      */
     protected $state = null;
 
-    public function __construct($config = array())
-    {
-        parent::__construct($config);
+    /**
+     * @var string
+     */
+    protected $option = 'com_ostoolbar';
 
-        $this->state = $this->get('State');
+    /**
+     * @var string
+     */
+    protected $view = null;
+
+    protected function getMainViews()
+    {
+        $views = array(
+            array('name' => JText::_('COM_OSTOOLBAR_TUTORIALS'), 'view' => 'tutorials', 'icon' => 'icon-tutorials.png'),
+            array(
+                'name'  => JText::_('COM_OSTOOLBAR_PARAMETERS'),
+                'link'  => 'index.php?option=com_config&amp;view=component&amp;component=com_ostoolbar&amp;path=&amp;tmpl=component',
+                'rel'   => '{handler: \'iframe\', size: {x: 570, y: 400}}',
+                'class' => 'modal',
+                'icon'  => 'icon-parameters.png'
+            ),
+            array('name' => JText::_('COM_OSTOOLBAR_HELP'), 'view' => 'help', 'icon' => 'icon-help.png')
+        );
+        return $views;
+    }
+
+    protected function routeLayout($tpl)
+    {
+        $layout = ucwords(strtolower($this->getLayout()));
+
+        if ($layout == 'Default') {
+            return false;
+        }
+
+        $method_name = 'display' . $layout;
+        if (method_exists($this, $method_name) && is_callable(array($this, $method_name))) {
+            $this->$method_name($tpl);
+            return true;
+        } else {
+            $this->setLayout('default');
+            return false;
+        }
     }
 
     public function display($tpl = null)
@@ -61,9 +98,15 @@ abstract class OstoolbarViewAdmin extends JViewLegacy
      *
      * @return void
      */
-    protected function setTitle($sub = null, $icon = 'simplerenew')
+    protected function setTitle($sub = null, $icon = 'ostoolbar')
     {
-        $img = JHtml::_('image', "com_simplerenew/icon-48-{$icon}.png", null, null, true, true);
+        $img = JHtml::image(
+            "administrator/components/com_ostoolbar/assets/images/icon-48-{$icon}.png",
+            null,
+            null,
+            false,
+            true
+        );
         if ($img) {
             $doc = JFactory::getDocument();
             $doc->addStyleDeclaration(".icon-48-{$icon} { background-image: url({$img}); }");
@@ -87,11 +130,11 @@ abstract class OstoolbarViewAdmin extends JViewLegacy
     protected function setToolBar($addDivider = true)
     {
         $user = JFactory::getUser();
-        if ($user->authorise('core.admin', 'com_simplerenew')) {
+        if ($user->authorise('core.admin', 'com_ostoolbar')) {
             if ($addDivider) {
                 JToolBarHelper::divider();
             }
-            JToolBarHelper::preferences('com_simplerenew');
+            JToolBarHelper::preferences('com_ostoolbar');
         }
     }
 

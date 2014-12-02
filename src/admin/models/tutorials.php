@@ -12,23 +12,20 @@ jimport('joomla.application.component.model');
 
 class OstoolbarModelTutorials extends OstoolbarModel
 {
-    protected $option = null;
     protected $view = null;
     protected $context = null;
     protected $pagination = null;
 
-    protected $list = null;
-    protected $total = null;
+    protected $data = null;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->option  = JRequest::getCmd('option');
-        $this->view    = JRequest::getCmd('view');
-        $this->context = $this->option . '.' . $this->view;
+        $app = JFactory::getApplication();
 
-        $this->populateState();
+        $this->view    = $app->input->getCmd('view', 'tutorials');
+        $this->context = $this->option . '.' . $this->view;
     }
 
     protected function populateState()
@@ -77,7 +74,6 @@ class OstoolbarModelTutorials extends OstoolbarModel
             $this->data = $data;
         }
 
-
         return $this->data;
     }
 
@@ -86,16 +82,15 @@ class OstoolbarModelTutorials extends OstoolbarModel
         $data = array('resource' => 'articles');
 
         $response = OstoolbarRequest::makeRequest($data);
-        if ($response->hasError()) :
+        if ($response->hasError()) {
             JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_ERROR'), 'error');
-            //$this->setError(JText::_('COM_OSTOOLBAR_ERROR').':  '.$response->getErrorMsg().' ('.JText::_('COM_OSTOOLBAR_ERROR_CODE').' '.$response->getErrorCode().')');
             return false;
-        endif;
+        }
 
         $list = $response->getBody();
-        for ($i = 0; $i < count($list); $i++) :
+        for ($i = 0; $i < count($list); $i++) {
             $list[$i]->link = 'index.php?option=com_ostoolbar&view=tutorial&id=' . $list[$i]->id;
-        endfor;
+        }
 
         return $list;
     }
@@ -106,26 +101,20 @@ class OstoolbarModelTutorials extends OstoolbarModel
 
         $cats    = array();
         $options = array();
-        if ($rows) :
-            foreach ($rows as $row) :
-                if ($row->ostcat_id && !in_array($row->ostcat_id, $cats)) :
+        if ($rows) {
+            foreach ($rows as $row) {
+                if ($row->ostcat_id && !in_array($row->ostcat_id, $cats)) {
                     $cats[]    = $row->ostcat_id;
-                    $options[] = JHTML::_('select.option', $row->ostcat_id, $row->ostcat_name);
-                endif;
-            endforeach;
-        endif;
+                    $options[] = JHtml::_('select.option', $row->ostcat_id, $row->ostcat_name);
+                }
+            }
+        }
         JArrayHelper::sortObjects($options, 'text');
-        $options = array_merge(
-            array(
-                JHTML::_('select.option', '', 'All'),
-                JHTML::_('select.option', 'none', '--')
-            ),
-            $options
-        );
+        array_unshift($options, JHtml::_('select.option', '', 'All'));
 
         $attributes = "class='inputbox' onchange='document.adminForm.submit();'";
 
-        $filters['category'] = JHTML::_(
+        $filters['category'] = JHtml::_(
             'select.genericlist',
             $options,
             'category',
@@ -141,28 +130,27 @@ class OstoolbarModelTutorials extends OstoolbarModel
     public function applyFilters($rows)
     {
         $filters = array();
-        if ($this->getState('category', '') != '') :
+        if ($this->getState('category', '') != '') {
             $category  = $this->getState('category');
-            $category  = $category == 'none' ? null : $category;
             $filters[] = array('field' => 'ostcat_id', 'value' => $category);
-        endif;
+        }
 
-        if ($filters) :
+        if ($filters) {
             $filtered = array();
-            foreach ($rows as $row) :
+            foreach ($rows as $row) {
                 $pass = true;
-                foreach ($filters as $f) :
-                    if ($row->{$f['field']} != $f['value']) :
+                foreach ($filters as $f) {
+                    if ($row->{$f['field']} != $f['value']) {
                         $pass = false;
-                    endif;
-                endforeach;
-                if ($pass) :
+                    }
+                }
+                if ($pass) {
                     $filtered[] = $row;
-                endif;
-            endforeach;
-        else :
+                }
+            }
+        } else {
             $filtered = $rows;
-        endif;
+        }
 
         return $filtered;
     }

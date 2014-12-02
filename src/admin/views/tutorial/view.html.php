@@ -1,42 +1,56 @@
 <?php
-defined('_JEXEC') or die;
+/**
+ * @package   com_ostoolbar
+ * @contact   www.ostraining.com, support@ostraining.com
+ * @copyright 2014 Open Source Training, LLC. All rights reserved
+ * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ */
 
-jimport('joomla.application.component.view');
+defined('_JEXEC') or die();
 
-class OSToolbarViewTutorial extends OSToolbarView
+
+class OstoolbarViewTutorial extends OstoolbarViewAdmin
 {
+    /**
+     * @var string
+     */
+    protected $return = null;
+
+    /**
+     * @var OstoolbarModelTutorial
+     */
+    protected $model = null;
+
+    /**
+     * @var object
+     */
+    protected $row = null;
 
     public function display($tpl = null)
     {
+        $app = JFactory::getApplication();
 
-        $this->generateToolbar();
-
-        if (JRequest::getVar('tmpl') == 'component') :
+        if ($app->input->getCmd('tmpl', '') == 'component') {
             $this->setLayout('popup');
-        endif;
+        }
 
-        $model = $this->getModel();
-        $row   = $model->getData();
+        $this->model  = $this->getModel();
+        $this->row    = $this->model->getData();
+        $this->return = 'index.php?option=' . $this->option . '&view=tutorials';
 
-        $return = 'index.php?option=' . $this->option . '&view=tutorials';
-        $this->assignRef('return', $return);
-        $this->assignRef('model', $model);
-        $this->assignRef('row', $row);
-
+        $this->setToolBar();
         parent::display($tpl);
     }
 
-    private function generateToolbar()
+    protected function setToolBar($addDivider = true)
     {
-        OstoolbarHelper::setPageTitle(JText::_('COM_OSTOOLBAR_TUTORIALS'));
-        OstoolbarHelper::customButton(
-            JText::_('COM_OSTOOLBAR_TUTORIALS'),
-            'icon-32-tutorials',
+        $this->setTitle();
+
+        OstoolbarToolbarHelper::link(
             'tutorials',
+            JText::_('COM_OSTOOLBAR_TUTORIALS'),
             'index.php?option=com_ostoolbar&view=tutorials'
         );
-        JToolBarHelper::preferences('com_ostoolbar', 500, 700);
-        /*OstoolbarHelper::customButton(JText::_('COM_OSTOOLBAR_HELP'), 'icon-32-help','help', 'index.php?option=com_ostoolbar&view=help');*/
+        parent::setToolBar();
     }
-
 }

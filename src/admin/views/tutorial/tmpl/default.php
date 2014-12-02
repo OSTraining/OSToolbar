@@ -1,8 +1,19 @@
 <?php
-defined('_JEXEC') or die('Restricted access');
+/**
+ * @package   com_ostoolbar
+ * @contact   www.ostraining.com, support@ostraining.com
+ * @copyright 2014 Open Source Training, LLC. All rights reserved
+ * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ */
+
+defined('_JEXEC') or die();
+
+if ($showAd = !empty($this->row->jversion)) {
+    $showAd = in_array($this->row->jversion, array("1.6_trial"));
+}
 ?>
 <div class="ostoolbar">
-    <?php if (in_array($this->row->jversion, array("1.6_trial"))): ?>
+    <?php if ($showAd): ?>
         <iframe src="http://www.ostraining.com/services/adv/adv1.html" width="734px" height="80px"
                 style="padding-left:10px"></iframe>
     <?php endif; ?>

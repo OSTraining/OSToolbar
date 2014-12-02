@@ -12,9 +12,8 @@ class OstoolbarViewTutorials extends OstoolbarViewAdmin
     public function display($tpl = null)
     {
         $app = JFactory::getApplication();
-        $this->generateToolbar();
 
-        $this->model = JModelLegacy::getInstance('Tutorials', 'OSToolbarModel');
+        $this->model = $this->getModel();
 
         if ($app->input->get('session', 0) && $app->input->getCmd('tmpl', '') == 'component') {
             $session    = JFactory::getSession();
@@ -36,18 +35,14 @@ class OstoolbarViewTutorials extends OstoolbarViewAdmin
             }
         }
 
+        $this->setToolBar();
         parent::display($tpl);
     }
 
-    private function generateToolbar()
+    protected function setToolbar($addDivider = false)
     {
-        OstoolbarHelper::setPageTitle(JText::_('COM_OSTOOLBAR_TUTORIALS'));
-        OstoolbarHelper::customButton(
-            JText::_('COM_OSTOOLBAR_TUTORIALS'),
-            'icon-32-tutorials',
-            'tutorials',
-            'index.php?option=com_ostoolbar&view=tutorials'
-        );
-        JToolBarHelper::preferences('com_ostoolbar', 500, 700);
+        $this->setTitle('COM_OSTOOLBAR_TUTORIALS');
+        parent::setToolBar($addDivider);
     }
+
 }

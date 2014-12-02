@@ -17,7 +17,7 @@
     </files>
 
     <administration>
-        <menu img="components/com_ostoolbar/assets/images/ost_icon.png">COM_OSTOOLBAR</menu>
+        <menu img="components/com_ostoolbar/assets/images/icon-16-tutorials.png">COM_OSTOOLBAR</menu>
         <files folder="admin">
             <filename>ostoolbar.php</filename>
             <filename>access.xml</filename>

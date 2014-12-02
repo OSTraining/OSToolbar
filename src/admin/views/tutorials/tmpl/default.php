@@ -1,18 +1,29 @@
 <?php
-defined('_JEXEC') or die('Restricted access');
+/**
+ * @package   com_ostoolbar
+ * @contact   www.ostraining.com, support@ostraining.com
+ * @copyright 2014 Open Source Training, LLC. All rights reserved
+ * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ */
+
+defined('_JEXEC') or die();
+
+$app = JFactory::getApplication();
+if ($app->input->getCmd('tmpl', '') == 'component') {
+    $target = 'target="_blank"';
+} else {
+    $target = '';
+}
 ?>
 <div class="ostoolbar">
     <form action='index.php' method='get' name='adminForm'>
-        <fieldset>
-            <legend><?php echo JText::_('COM_OSTOOLBAR_FILTER'); ?></legend>
-            <table>
-                <tr>
-                    <td><?php echo JText::_('COM_OSTOOLBAR_CATEGORY'); ?>:</td>
-                    <td><?php echo $this->filters['category'] ?></td>
-                </tr>
-            </table>
-        </fieldset>
-        <table cellpadding='4' cellspacing='0' border='0' width='100%' class='adminlist'>
+        <div class="filter-search fltlft">
+            <?php echo JText::_('COM_OSTOOLBAR_CATEGORY'); ?>
+            <?php echo $this->filters['category'] ?>
+        </div>
+        <div class="clr"></div>
+
+        <table class="table table-striped adminlist">
             <tbody>
             <?php
             $params = JComponentHelper::getParams('com_ostoolbar');
@@ -24,9 +35,10 @@ defined('_JEXEC') or die('Restricted access');
             $index = 0;
             for ($i = 0; $i < count($this->rows); $i++) :
                 $row = $this->rows[$i];
-                if (!in_array($row->jversion, array("1.6_trial")) && is_array($selected) && count(
-                        $selected
-                    ) && !in_array("s_" . $row->id, $selected)
+                if (
+                    !in_array($row->jversion, array("1.6_trial"))
+                    && is_array($selected) && count($selected)
+                    && !in_array("s_" . $row->id, $selected)
                 ) {
                     continue;
                 }
@@ -35,13 +47,11 @@ defined('_JEXEC') or die('Restricted access');
                 <tr class="<?php echo $class; ?>">
                     <td class="tutnumber"><?php echo $index; ?></td>
                     <td class="tut">
-                        <a href="<?php echo $row->link; ?>" <?php if (JRequest::getVar("tmpl") == "component") {
-                            echo('target="_blank"');
-                        } ?> >
-                            <?php echo $row->title; ?>
-                        </a>
+                        <?php echo JHtml::link($row->link, $row->title, $target); ?>
                     </td>
-                    <td class="tutcat"><?php echo $row->ostcat_name ? $row->ostcat_name : '--'; ?></td>
+                    <td class="tutcat">
+                        <?php echo $row->ostcat_name ? : '--'; ?>
+                    </td>
                 </tr>
             <?php endfor; ?>
             </tbody>

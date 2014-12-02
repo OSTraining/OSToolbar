@@ -1,36 +1,29 @@
 <?php
-defined('_JEXEC') or die;
-jimport('joomla.application.component.model');
+/**
+ * @package   com_ostoolbar
+ * @contact   www.ostraining.com, support@ostraining.com
+ * @copyright 2014 Open Source Training, LLC. All rights reserved
+ * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ */
 
-class OSToolbarModelTutorial extends OSToolbarModel
+defined('_JEXEC') or die();
+
+class OstoolbarModelTutorial extends OstoolbarModel
 {
-
-    protected $option = null;
-    protected $pagination = null;
-
     protected $data = null;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->option = JRequest::getCmd('option'); // 1.6 sets this for you
-        $this->populateState();
-    }
 
     protected function populateState()
     {
         $app = JFactory::getApplication();
 
-        $id = JRequest::getVar('cid', array(), 'request', 'array');
-        if (empty($id)) :
-            $id = JRequest::getInt('id', 0);
-        else :
+        $id = $app->input->get('cid', array(), 'request', 'array');
+        if (empty($id)) {
+            $id = $app->input->getInt('id', 0);
+        } else {
             $id = $id[0];
-        endif;
+        }
 
         $this->setState('id', $id);
-
     }
 
     public function getData()
@@ -47,7 +40,6 @@ class OSToolbarModelTutorial extends OSToolbarModel
         $response = OstoolbarRequest::makeRequest($data);
         if ($response->hasError()) :
             JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_ERROR'), 'error');
-            //$this->setError('Error:  '.$response->getErrorMsg().' (Code '.$response->getErrorCode().')');
             return false;
         endif;
 

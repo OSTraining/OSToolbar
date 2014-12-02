@@ -12,18 +12,15 @@ abstract class OstoolbarHelper
 {
     public static function adminInit()
     {
-        if (JRequest::getVar('format') == 'raw') :
+        $app = JFactory::getApplication();
+        if ($app->input->getCmd('format', '') == 'raw') {
             return false;
-        endif;
-        $document = JFactory::getDocument();
-        $document->addStyleSheet(JURI::root() . 'administrator/components/com_ostoolbar/assets/css/ostoolbar.css');
-        $document->addScript(JURI::root() . 'administrator/components/com_ostoolbar/assets/js/jquery-1.4.2.min.js');
-        $document->addScript(
-            JURI::root() . 'administrator/components/com_ostoolbar/assets/js/jquery-ui-1.8.6.custom.min.js'
-        );
-        $document->addStyleSheet(
-            JURI::root() . 'administrator/components/com_ostoolbar/assets/css/ui-lightness/jquery-ui-1.8.6.custom.css'
-        );
+        }
+
+        JHtml::_('stylesheet', 'administrator/components/com_ostoolbar/assets/css/ostoolbar.css');
+        JHtml::_('script', 'administrator/components/com_ostoolbar/assets/js/jquery-1.4.2.min.js');
+        JHtml::_('script', 'administrator/components/com_ostoolbar/assets/js/jquery-ui-1.8.6.custom.min.js');
+        JHtml::_('script', 'administrator/components/com_ostoolbar/assets/css/ui-lightness/jquery-ui-1.8.6.custom.css');
     }
 
     public static function splitList($string, $delimiter = ",")
@@ -79,5 +76,4 @@ abstract class OstoolbarHelper
 
         $bar->appendButton('Custom', $html, $id);
     }
-
 }

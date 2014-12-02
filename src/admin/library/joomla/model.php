@@ -12,9 +12,4 @@ jimport('joomla.application.component.model');
 
 class OstoolbarModel extends JModelLegacy
 {
-    public function __construct($config = array())
-    {
-        parent::__construct($config);
-    }
-
 }
