@@ -8,7 +8,7 @@ class JFormFieldLogo extends JFormField
     protected function getInput()
     {
 
-        $response = OSToolbarRequestHelper::makeRequest(array('resource' => 'checkapi'));
+        $response = OstoolbarRequest::makeRequest(array('resource' => 'checkapi'));
 
         if ($response->hasError() || $response->getBody() == 0) {
             ob_start();

@@ -39,7 +39,7 @@ class OSToolbarViewHelp extends OSToolbarView
     {
         $data = array('resource' => 'helppage');
 
-        $response = OSToolbarRequestHelper::makeRequest($data);
+        $response = OstoolbarRequest::makeRequest($data);
         if ($response->hasError()) : {
             JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_ERROR'), 'error');
             return false;
@@ -49,8 +49,8 @@ class OSToolbarViewHelp extends OSToolbarView
         $body = $response->getBody();
 
         if ($body != false) {
-            $body->introtext = OSToolbarRequestHelper::filter($body->introtext);
-            $body->fulltext  = OSToolbarRequestHelper::filter($body->fulltext);
+            $body->introtext = OstoolbarRequest::filter($body->introtext);
+            $body->fulltext  = OstoolbarRequest::filter($body->fulltext);
         }
 
         return $body;

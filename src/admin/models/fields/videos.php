@@ -13,7 +13,7 @@ class JFormFieldVideos extends JFormField
 
         $model     = JModelLegacy::getInstance('Tutorials', 'OSToolbarModel');
         $available = $model->getList(true);
-        if (OSToolbarRequestHelper::$isTrial) {
+        if (OstoolbarRequest::$isTrial) {
             $document = JFactory::getDocument();
             $document->addStyleDeclaration("#jform_videos-lbl{display:none}");
             return JText::_('COM_OSTOOLBAR_API_KEY_ERROR');

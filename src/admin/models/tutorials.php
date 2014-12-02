@@ -85,7 +85,7 @@ class OstoolbarModelTutorials extends OstoolbarModel
     {
         $data = array('resource' => 'articles');
 
-        $response = OSToolbarRequestHelper::makeRequest($data);
+        $response = OstoolbarRequest::makeRequest($data);
         if ($response->hasError()) :
             JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_ERROR'), 'error');
             //$this->setError(JText::_('COM_OSTOOLBAR_ERROR').':  '.$response->getErrorMsg().' ('.JText::_('COM_OSTOOLBAR_ERROR_CODE').' '.$response->getErrorCode().')');

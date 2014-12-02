@@ -56,11 +56,11 @@ abstract class OstoolbarCache
         $cache = JFactory::getCache(self::CACHE_GROUP, 'callback');
 
         $key_error = false;
-        $response  = OSToolbarRequestHelper::makeRequest(array('resource' => 'checkapi'));
+        $response  = OstoolbarRequest::makeRequest(array('resource' => 'checkapi'));
         if ($response->hasError() || $response->getBody() == 0) {
             $key_error = true;
             $cache     = JFactory::getCache(self::CACHE_GROUP . "_trial", 'callback');
-            OSToolbarRequestHelper::isTrial();
+            OstoolbarRequest::isTrial();
 
         }
 
@@ -75,7 +75,7 @@ abstract class OstoolbarCache
 
         if ($data !== false) {
             // In this case we have data in cache but just send minimum request to check update
-            $response = OSToolbarRequestHelper::makeRequest(array('resource' => 'lastupdate'));
+            $response = OstoolbarRequest::makeRequest(array('resource' => 'lastupdate'));
             if (!$response->hasError()) {
                 $last_update = strtotime($response->getBody());
                 if (is_array($data)) {

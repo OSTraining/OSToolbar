@@ -31,7 +31,7 @@ class OSToolbarModelTutorial extends JModelLegacy
     {
         $data = array('resource' => 'article', 'id' => $id);
 
-        $response = OSToolbarRequestHelper::makeRequest($data);
+        $response = OstoolbarRequest::makeRequest($data);
         if ($response->hasError()) :
             JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_ERROR'), 'error');
             //$this->setError('Error:  '.$response->getErrorMsg().' (Code '.$response->getErrorCode().')');
@@ -39,8 +39,8 @@ class OSToolbarModelTutorial extends JModelLegacy
         endif;
 
         $body            = $response->getBody();
-        $body->introtext = OSToolbarRequestHelper::filter($body->introtext);
-        $body->fulltext  = OSToolbarRequestHelper::filter($body->fulltext);
+        $body->introtext = OstoolbarRequest::filter($body->introtext);
+        $body->fulltext  = OstoolbarRequest::filter($body->fulltext);
 
         return $body;
     }

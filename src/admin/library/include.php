@@ -18,7 +18,6 @@ if (!defined('OSTOOLBAR_LOADED')) {
 
     // Include helpers
     JLoader::register('OSToolbarSystem', OSTOOLBAR_ADMIN . '/helpers/system.php');
-    JLoader::register('OSToolbarRequestHelper', OSTOOLBAR_ADMIN . '/helpers/request.php');
     JLoader::register('JRestRequest', OSTOOLBAR_ADMIN . '/rest/request.php');
 
     $app = JFactory::getApplication();

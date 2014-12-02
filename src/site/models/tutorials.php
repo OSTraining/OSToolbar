@@ -37,7 +37,7 @@ class OSToolbarModelTutorials extends JModellegacy
     {
         $data = array('resource' => 'articles');
 
-        $response = OSToolbarRequestHelper::makeRequest($data);
+        $response = OstoolbarRequest::makeRequest($data);
 
         if ($response->hasError()) :
             JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_ERROR'), 'error');
