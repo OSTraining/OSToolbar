@@ -10,7 +10,7 @@ class JFormFieldVideos extends JFormField
 		JLoader::register('OSToolbarSystem', JPATH_SITE.'/administrator/components/com_ostoolbar/helpers/system.php');
 		$check = OSToolbarSystem::check();
 
-		JLoader::register('OSToolbarHelper', JPATH_SITE.'/administrator/components/com_ostoolbar//helpers/helper.php');
+		JLoader::register('OstoolbarHelper', JPATH_SITE.'/administrator/components/com_ostoolbar//helpers/helper.php');
 		JLoader::register('OSToolbarRequestHelper', JPATH_SITE.'/administrator/components/com_ostoolbar//helpers/request.php');
 		JLoader::register('OSToolbarCacheHelper', JPATH_SITE.'/administrator/components/com_ostoolbar//helpers/cache.php');
 		JLoader::register('JRestRequest', JPATH_SITE.'/administrator/components/com_ostoolbar//rest/request.php');
@@ -39,11 +39,11 @@ class JFormFieldVideos extends JFormField
 			return JText::_('COM_OSTOOLBAR_API_KEY_ERROR');
 		}
 		*/
-		
+
 		if ($this->value)
 			$selected = preg_split("/,/",$this->value);
 		else $selected = array();
-		
+
 		$empty = count($selected) ? false : true;
 
 		for($i=0; $i<count($available); $i++) :
@@ -53,10 +53,10 @@ class JFormFieldVideos extends JFormField
 				$selected[] = "s_".$available[$i]->id;
 			}
 		endfor;
-		
+
 		$document = JFactory::getDocument();
 		$document->addScript('http://code.jquery.com/ui/1.10.0/jquery-ui.js');
-		$document->addStyleSheet(JURI::root().'administrator/components/com_ostoolbar/assets/css/ui-lightness/jquery-ui-1.8.6.custom.css'); 
+		$document->addStyleSheet(JURI::root().'administrator/components/com_ostoolbar/assets/css/ui-lightness/jquery-ui-1.8.6.custom.css');
 		$document->addStyleDeclaration("#jform_videos-lbl{display:none}
 				#sortable1, #sortable2 {
 					width:250px;
@@ -69,11 +69,11 @@ class JFormFieldVideos extends JFormField
 					height:300px;
 					overflow-y:scroll;
 				}
-				
+
 				#sortable1 {
 					margin-right:15px;
 				}
-				
+
 				#sortable1 li, #sortable2 li {
 					padding:5px;
 					margin-top:1px;
@@ -81,26 +81,26 @@ class JFormFieldVideos extends JFormField
 				}
 			");
 		$document->addScriptDeclaration("
-		
+
 			jQuery(function() {
 				jQuery('#sortable1, #sortable2').sortable({
 					connectWith: '.connectedSortable'
 				}).disableSelection();
-				
+
 				function updateSortableField() {
 					var selected = jQuery('#sortable2').sortable('toArray');
 					var string	= selected.join(',');
 					jQuery('#".$this->id."_id').val(string);
 				}
-				
+
 				jQuery('#sortable2').bind('sortupdate', function(event, ui) {
 					updateSortableField();
 				});
-				
+
 				updateSortableField();
 			});
 		");
-		
+
 		ob_start();
 		?>
         	<div>
@@ -111,7 +111,7 @@ class JFormFieldVideos extends JFormField
             </div>
             <div class='sortable_holder'>
                 <ul id="sortable1" class="connectedSortable">
-                    <?php 
+                    <?php
 					$data = array();
 					for($i=0; $i<count($available); $i++) :
                         $item	= $available[$i];
@@ -127,7 +127,7 @@ class JFormFieldVideos extends JFormField
                 </ul>
             	<div style="float:left; width:50px"><?php echo(JText::_("DRAP_DROP_TO_COLLECT"));?></div>
                 <ul id="sortable2" class="connectedSortable">
-                    <?php 
+                    <?php
 					for($i=0; $i<count($selected); $i++) :
 						if (!isset($data[$selected[$i]]))
 							continue;
@@ -139,12 +139,12 @@ class JFormFieldVideos extends JFormField
                 </ul>
                 <div class="clearfix"></div>
             </div>
-        
-        
+
+
         	<input type="hidden" id="<?php echo($this->id);?>_id" name="<?php echo($this->name);?>" value="<?php echo($this->value);?>" />
         <?php
 		$input = ob_get_contents();
 		ob_end_clean();
 		return $input;
 	}
-} 
+}

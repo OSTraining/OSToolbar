@@ -16,13 +16,13 @@ if ($check['pass'] == false) {
 }
 
 // Include helpers
-JLoader::register('OSToolbarHelper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/helper.php');
+JLoader::register('OstoolbarHelper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/helper.php');
 JLoader::register('OSToolbarRequestHelper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/request.php');
 JLoader::register('OSToolbarCacheHelper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/cache.php');
 JLoader::register('JRestRequest', JPATH_COMPONENT_ADMINISTRATOR . '/rest/request.php');
 
 // Initialize CSS and Javascript
-OSToolbarHelper::adminInit();
+OstoolbarHelper::adminInit();
 
 // Crank up the controller
 $input   = JFactory::getApplication()->input;

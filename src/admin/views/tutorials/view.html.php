@@ -23,7 +23,7 @@ class OstoolbarViewTutorials extends OstoolbarViewAdmin
         } else {
             $this->rows = $this->model->getList();
             if ($errors = $this->model->getErrors()) {
-                OSToolbarHelper::renderErrors($errors);
+                OstoolbarHelper::renderErrors($errors);
             }
         }
 
@@ -41,8 +41,8 @@ class OstoolbarViewTutorials extends OstoolbarViewAdmin
 
     private function generateToolbar()
     {
-        OSToolbarHelper::setPageTitle(JText::_('COM_OSTOOLBAR_TUTORIALS'));
-        OSToolbarHelper::customButton(
+        OstoolbarHelper::setPageTitle(JText::_('COM_OSTOOLBAR_TUTORIALS'));
+        OstoolbarHelper::customButton(
             JText::_('COM_OSTOOLBAR_TUTORIALS'),
             'icon-32-tutorials',
             'tutorials',
