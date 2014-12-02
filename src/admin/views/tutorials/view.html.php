@@ -3,30 +3,31 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class OSToolbarViewTutorials extends OSToolbarView
+class OstoolbarViewTutorials extends OstoolbarViewAdmin
 {
+    protected $model = null;
+    protected $rows = array();
+    protected $filters = null;
 
     public function display($tpl = null)
     {
-
+        $app = JFactory::getApplication();
         $this->generateToolbar();
 
-        $model = JModelLegacy::getInstance('Tutorials', 'OSToolbarModel');
+        $this->model = JModelLegacy::getInstance('Tutorials', 'OSToolbarModel');
 
-        if (JRequest::getVar('session', 0) && JRequest::getVar('tmpl', '') == 'component') :
-            $session = JFactory::getSession();
-            $rows    = $session->get('helparticles', array(), 'OSToolbar');
+        if ($app->input->get('session', 0) && $app->input->getCmd('tmpl', '') == 'component') {
+            $session    = JFactory::getSession();
+            $this->rows = $session->get('helparticles', array(), 'OSToolbar');
             $this->setLayout('popup');
-        else :
-            $rows = $model->getList();
-            if ($errors = $model->getErrors()) :
-                $rows = array();
+        } else {
+            $this->rows = $this->model->getList();
+            if ($errors = $this->model->getErrors()) {
                 OSToolbarHelper::renderErrors($errors);
-            endif;
-        endif;
+            }
+        }
 
-        $filters = $model->getFilters($rows);
-        $rows    = $model->applyFilters($rows);
+        $this->filters = $this->model->getFilters($this->rows);
 
         $params = JComponentHelper::getParams('com_ostoolbar');
         if (OSToolbarRequestHelper::$isTrial) {
@@ -34,17 +35,6 @@ class OSToolbarViewTutorials extends OSToolbarView
                 JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_INVALIAD'), 'error');
             }
         }
-
-        /*
-        $params = JComponentHelper::getParams('com_ostoolbar');
-        if (!$params->get('api_key')) {
-            JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_ERROR'), 'error');
-        }
-        */
-
-        $this->assignRef('model', $model);
-        $this->assignRef('rows', $rows);
-        $this->assignRef('filters', $filters);
 
         parent::display($tpl);
     }

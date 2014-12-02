@@ -1,9 +1,16 @@
 <?php
+/**
+ * @package   com_ostoolbar
+ * @contact   www.ostraining.com, support@ostraining.com
+ * @copyright 2014 Open Source Training, LLC. All rights reserved
+ * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ */
 
-defined('_JEXEC') or die('Restricted Access');
+defined('_JEXEC') or die();
+
 jimport('joomla.model.model');
 
-class OSToolbarController extends JControllerLegacy
+class OstoolbarController extends JControllerLegacy
 {
     protected $option = null;
     protected $saved_object = null;
@@ -11,17 +18,21 @@ class OSToolbarController extends JControllerLegacy
     public function __construct($params = array())
     {
         parent::__construct($params);
-        $this->set('option', JRequest::getCmd('option'));
+
+        $input = JFactory::getApplication()->input;
+
+        $this->set('option', $input->getCmd('option', ''));
         JModelLegacy::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR . '/models');
         JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR . '/tables');
     }
 
     public function display($cachable = false, $urlparams = false)
     {
-        $view = JRequest::getVar('view', '');
-        if (!$view) :
-            JRequest::setVar('view', 'tutorials');
-        endif;
+        $input = JFactory::getApplication()->input;
+        $view  = $input->getCmd('view', '');
+        if (!$view) {
+            $input->set('view', 'tutorials');
+        }
 
         parent::display($cachable, $urlparams);
     }
@@ -58,10 +69,11 @@ class OSToolbarController extends JControllerLegacy
 
     public function updatelanguage()
     {
+        // @TODO: No obvious equivalent to this in JInput
         $language_data = JRequest::getVar("language_data", '', 'post', 'string', JREQUEST_ALLOWRAW);
         $data          = json_decode($language_data, true);
 
-        $db    = & JFactory::getDBO();
+        $db    = &JFactory::getDBO();
         $query = $db->getQuery(true);
         $query->select('a.*');
         $query->from('`#__extensions` AS a');
@@ -73,19 +85,12 @@ class OSToolbarController extends JControllerLegacy
         $file                  = $default_lang . ".com_ostoolbar.ini";
         $com_path              = JPATH_SITE . "/administrator/components/com_ostoolbar";
         $default_lang_file     = JPath::clean($com_path . "/language/" . $default_lang . "/" . $file);
-        $default_sys_lang_file = JPath::clean(
-            $com_path . "/language/" . $default_lang . "/" . $default_lang . ".com_ostoolbar.sys.ini"
-        );
 
         if (!JFile::exists($default_lang_file)) {
             // Find available lang file if default language doesn't have language file
             foreach ($languages as $language) {
-                $default_lang          = $language->element;
                 $default_lang_file     = JPath::clean(
                     $com_path . "/language/" . $language->element . "/" . $language->element . ".com_ostoolbar.ini"
-                );
-                $default_sys_lang_file = JPath::clean(
-                    $com_path . "/" . "language" . "/" . $language->element . "/" . $language->element . ".com_ostoolbar.sys.ini"
                 );
                 if (JFile::exists($default_lang_file)) {
                     break;
@@ -103,16 +108,6 @@ class OSToolbarController extends JControllerLegacy
         $default_plg_lang_file     = JPath::clean(
             JPATH_ADMINISTRATOR . "/language/" . $default_lang . "/" . $default_lang . ".plg_quickicon_ostoolbar.ini"
         );
-        $default_plg_sys_lang_file = JPath::clean(
-            JPATH_ADMINISTRATOR . "/language/" . $default_lang . "/" . $default_lang . ".plg_quickicon_ostoolbar.sys.ini"
-        );
-
-        $default_sys_plg_lang_file     = JPath::clean(
-            JPATH_ADMINISTRATOR . "/language/" . $default_lang . "/" . $default_lang . ".plg_system_ostoolbar.ini"
-        );
-        $default_sys_plg_sys_lang_file = JPath::clean(
-            JPATH_ADMINISTRATOR . "/language/" . $default_lang . "/" . $default_lang . ".plg_system_ostoolbar.sys.ini"
-        );
 
         foreach ($languages as $language) {
             $lang_file                = JPath::clean(
@@ -124,22 +119,10 @@ class OSToolbarController extends JControllerLegacy
             $plg_lang_file            = JPath::clean(
                 JPATH_ADMINISTRATOR . "/language/" . $language->element . "/" . $language->element . ".plg_quickicon_ostoolbar.ini"
             );
-            $plg_system_lang_file     = JPath::clean(
-                JPATH_ADMINISTRATOR . "/language/" . $language->element . "/" . $language->element . ".plg_quickicon_ostoolbar.sys.ini"
-            );
-            $sys_plg_lang_file        = JPath::clean(
-                JPATH_ADMINISTRATOR . "/language/" . $language->element . "/" . $language->element . ".plg_system_ostoolbar.ini"
-            );
-            $sys_plg_system_lang_file = JPath::clean(
-                JPATH_ADMINISTRATOR . "/language/" . $language->element . "/" . $language->element . ".plg_system_ostoolbar.sys.ini"
-            );
 
             $this->saveLanguage($data[$language->element]["com"], $lang_file, $default_lang_file);
             $this->saveLanguage($data[$language->element]["sys"], $system_lang_file, $default_sys_lang_file);
             $this->saveLanguage($data[$language->element]["plg"], $plg_lang_file, $default_plg_lang_file);
-            //$this->saveLanguage($data[$language->element]["plg_sys"], $plg_system_lang_file, $default_plg_sys_lang_file);
-            //$this->saveLanguage($data[$language->element]["sys_plg"], $sys_plg_lang_file, $default_sys_plg_lang_file);
-            //$this->saveLanguage($data[$language->element]["sys_plg_sys"], $sys_plg_system_lang_file, $default_sys_plg_sys_lang_file);
 
         }
         echo(1);
@@ -148,7 +131,7 @@ class OSToolbarController extends JControllerLegacy
 
     public function updatelogo()
     {
-        $type     = JRequest::getVar("type");
+        $type     = JFactory::getApplication()->input->get("type");
         $data     = file_get_contents('php://input');
         $com_path = JPATH_SITE . "/administrator/components/com_ostoolbar";
         switch ($type) {
@@ -164,7 +147,12 @@ class OSToolbarController extends JControllerLegacy
             case "jform[plugin_logo]":
                 $path = JPATH_SITE . "/media/plg_quickicon_ostoolbar/images/ost_icon_24.png";
                 break;
+
+            default:
+                $path = '';
+                break;
         }
+
         echo($path);
         JFile::write($path, $data);
         echo("{success:true}");
@@ -173,7 +161,7 @@ class OSToolbarController extends JControllerLegacy
 
     public function cancel()
     {
-        $this->setRedirect(JRequest::getVar('ret', 'index.php?option=' . $this->option));
+        $ret = JFactory::getApplication()->input->get('ret');
+        $this->setRedirect($ret ?: 'index.php?option=' . $this->option);
     }
-
 }

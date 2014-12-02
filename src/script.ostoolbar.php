@@ -1,39 +1,63 @@
 <?php
+/**
+ * @package   com_ostoolbar
+ * @contact   www.ostraining.com, support@ostraining.com
+ * @copyright 2014 Open Source Training, LLC. All rights reserved
+ * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ */
+
 defined('_JEXEC') or die();
 
-class Com_OSToolbarInstallerScript
+class com_ostoolbarInstallerScript
 {
     public function update()
     {
-        Com_OSToolbarInstallerScript::uninstall();
-        Com_OSToolbarInstallerScript::install();
+        $this->uninstall();
+        $this->install();
     }
 
     public function install()
     {
-        $cache = JFactory::getCache("com_ostoolbar", 'callback');
+        $cache = JFactory::getCache('com_ostoolbar', 'callback');
         $cache->clean();
 
-        $cache = JFactory::getCache("com_ostoolbar_trial", 'callback');
+        $cache = JFactory::getCache('com_ostoolbar_trial', 'callback');
         $cache->clean();
 
         $db        = JFactory::getDBO();
         $src       = dirname(__FILE__);
         $installer = new JInstaller;
-        $result    = $installer->install($src . '/exts/plg_quickicon_ostoolbar');
+
+        // Install the quickicon plugin
+        $result = $installer->install($src . '/exts/plg_quickicon_ostoolbar');
         if ($result) {
-            $db->setQuery(
-                "UPDATE #__extensions SET enabled = 1 WHERE  type = 'plugin' AND element = 'ostoolbar' AND folder='quickicon'"
-            );
-            $db->query();
+            $query = $db->getQuery(true)
+                ->update('#__extensions')
+                ->set('enabled = 1')
+                ->where(
+                    array(
+                        'type = ' . $db->quote('plugin'),
+                        'element = ' . $db->quote('ostoolbar'),
+                        'folder=' . $db->quote('quickicon')
+                    )
+                );
+            $db->setQuery($query)->execute();
         }
 
+        // Install the system plugin
         $result = $installer->install($src . '/exts/plg_system_ostoolbar');
         if ($result) {
-            $db->setQuery(
-                "UPDATE #__extensions SET enabled = 1 WHERE  type = 'plugin' AND element = 'ostoolbar' AND folder='system'"
-            );
-            $db->query();
+            $query = $db->getQuery(true)
+                ->update('#__extensions')
+                ->set('enabled = 1')
+                ->where(
+                    array(
+                        'type = ' . $db->quote('plugin'),
+                        'element = ' . $db->quote('ostoolbar'),
+                        'folder = ' . $db->quote('system')
+                    )
+                );
+            $db->setQuery($query)->execute();
         }
 
     }
@@ -41,24 +65,38 @@ class Com_OSToolbarInstallerScript
     public function uninstall()
     {
         $db        = JFactory::getDBO();
-        $src       = dirname(__FILE__);
         $installer = new JInstaller;
 
-        $db->setQuery(
-            "SELECT extension_id FROM #__extensions WHERE  type = 'plugin' AND element = 'ostoolbar' AND folder='quickicon'"
-        );
-        $id = $db->loadResult();
+        $query = $db->getQuery(true)
+            ->select('extension_id')
+            ->from('#__extensions')
+            ->where(
+                array(
+                    'type = ' . $db->quote('plugin'),
+                    'element = ' . $db->quote('ostoolbar'),
+                    'folder=' . $db->quote('quickicon')
+                )
+            );
+
+        $id = $db->setQuery($query)->loadResult();
         if ($id) {
             $installer->uninstall('plugin', $id, 1);
         }
 
-        $db->setQuery(
-            "SELECT extension_id FROM #__extensions WHERE  type = 'plugin' AND element = 'ostoolbar' AND folder='system'"
-        );
-        $id = $db->loadResult();
+        $query = $db->getQuery(true)
+            ->select('extension_id')
+            ->from('#__extensions')
+            ->where(
+                array(
+                    'type = ' . $db->quote('plugin'),
+                    'element = ' . $db->quote('ostoolbar'),
+                    'folder=' . $db->quote('system')
+                )
+            );
+
+        $id = $db->setQuery($query)->loadResult();
         if ($id) {
             $installer->uninstall('plugin', $id, 1);
         }
     }
 }
-
