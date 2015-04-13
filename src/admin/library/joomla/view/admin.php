@@ -100,13 +100,7 @@ abstract class OstoolbarViewAdmin extends JViewLegacy
      */
     protected function setTitle($sub = null, $icon = 'ostoolbar')
     {
-        $img = JHtml::image(
-            "administrator/components/com_ostoolbar/assets/images/icon-48-{$icon}.png",
-            null,
-            null,
-            false,
-            true
-        );
+        $img = JHtml::image("com_ostoolbar/icon-48-{$icon}.png", null, null, true, true);
         if ($img) {
             $doc = JFactory::getDocument();
             $doc->addStyleDeclaration(".icon-48-{$icon} { background-image: url({$img}); }");

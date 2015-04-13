@@ -7,7 +7,6 @@ class JFormFieldLogo extends JFormField
 
     protected function getInput()
     {
-
         $response = OstoolbarRequest::makeRequest(array('resource' => 'checkapi'));
 
         if ($response->hasError() || $response->getBody() == 0) {
@@ -28,32 +27,43 @@ class JFormFieldLogo extends JFormField
         }
 
         header('Pragma: no-cache');
-        $document = JFactory::getDocument();
-        $document->addScript(JURI::root() . 'administrator/components/com_ostoolbar/assets/js/fileuploader.js');
-        $document->addStyleSheet(JURI::root() . 'administrator/components/com_ostoolbar/assets/css/fileuploader.css');
-        $com_path = JURI::root() . "administrator/components/com_ostoolbar";
+
+        JHtml::_('script', 'com_ostoolbar/fileuploader.js', false, true);
+        JHtml::_('stylesheet', 'com_ostoolbar/fileuploader.css', null, true);
+
         switch ($this->name) {
             case "jform[panel_logo]":
-                $src  = $com_path . "/assets/images/ost-logo.png";
+                $imageFile = "ost-logo.png";
                 $note = JText::_("PNG_FORMAT_LARGE");
                 break;
+
             case "jform[menu_logo]":
-                $src  = $com_path . "/assets/images/ost_icon.png";
+                $imageFile = "ost_icon.png";
                 $note = JText::_("PNG_FORMAT_SMALL");
                 break;
+
             case "jform[tutorial_logo]":
-                $src  = $com_path . "/assets/images/icon-tutorials-small.png";
+                $imageFile = "icon-tutorials-small.png";
                 $note = JText::_("PNG_FORMAT_MEDIUM");
                 break;
+
             case "jform[plugin_logo]":
-                $src  = JURI::root() . "media/plg_quickicon_ostoolbar/images/ost_icon_24.png";
+                $imageFile = "quickicon/ost_icon_24.png";
                 $note = JText::_("PNG_FORMAT_MEDIUM");
+                break;
+
+            default:
+                $imageFile = '';
+                $note = '';
                 break;
         }
+
         ob_start();
         ?>
         <div style="float:left; position:relative">
-            <div style="margin-right:10px;" id="img_<?php echo($this->id); ?>"><img src="<?php echo($src); ?>"/></div>
+            <div style="margin-right:10px;" id="img_<?php echo($this->id); ?>">
+                <?php echo JHtml::_('image', 'com_ostoolbar/' . $imageFile, $note, null, true); ?>
+            </div>
             <div id="file-uploader-<?php echo($this->id); ?>">
                 <noscript>
                     <p><?php echo("ENANLE_JS"); ?></p>

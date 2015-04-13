@@ -17,10 +17,11 @@ abstract class OstoolbarHelper
             return false;
         }
 
-        JHtml::_('stylesheet', 'administrator/components/com_ostoolbar/assets/css/ostoolbar.css');
-        JHtml::_('script', 'administrator/components/com_ostoolbar/assets/js/jquery-1.4.2.min.js');
-        JHtml::_('script', 'administrator/components/com_ostoolbar/assets/js/jquery-ui-1.8.6.custom.min.js');
-        JHtml::_('script', 'administrator/components/com_ostoolbar/assets/css/ui-lightness/jquery-ui-1.8.6.custom.css');
+        JHtml::_('script', 'com_ostoolbar/jquery.js', false, true);
+        JHtml::_('script', 'com_ostoolbar/jquery-ui-1.8.6.custom.min.js', false, true);
+
+        JHtml::_('stylesheet', 'com_ostoolbar/admin/ostoolbar.css', null, true);
+        JHtml::_('stylesheet', 'com_ostoolbar/ui-lightness/jquery-ui-1.8.6.custom.css', null, true);
     }
 
     public static function splitList($string, $delimiter = ",")

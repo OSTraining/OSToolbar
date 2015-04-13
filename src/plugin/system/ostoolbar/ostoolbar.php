@@ -10,8 +10,6 @@ defined('_JEXEC') or die();
 
 class plgSystemOsToolbar extends JPlugin
 {
-    protected $imageDir = 'administrator/components/com_ostoolbar/assets/images';
-
     public function onAfterDispatch()
     {
         $app = JFactory::getApplication();
@@ -25,7 +23,7 @@ class plgSystemOsToolbar extends JPlugin
             return;
         }
 
-        $image = JHtml::_('image', "{$this->imageDir}/icon-32-tutorials.png", null, null, false, true);
+        $image = JHtml::_('image', "com_ostoolbar/icon-32-tutorials.png", null, null, true, true);
         if ($image) {
             JFactory::getDocument()
                 ->addStyleDeclaration(".icon-32-tutorial {background:url('{$image}');}");

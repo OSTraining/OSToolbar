@@ -18,8 +18,4 @@
         <language tag="en-GB">en-GB.plg_quickicon_ostoolbar.ini</language>
         <language tag="en-GB">en-GB.plg_quickicon_ostoolbar.sys.ini</language>
     </languages>
-
-    <media destination="plg_quickicon_ostoolbar" folder="media">
-        <folder>images</folder>
-    </media>
 </extension>

@@ -14,13 +14,7 @@ abstract class OstoolbarToolbarHelper extends JToolbarHelper
     {
         $bar = JToolbar::getInstance('toolbar');
 
-        $img = JHtml::image(
-            "administrator/components/com_ostoolbar/assets/images/icon-32-{$name}.png",
-            null,
-            null,
-            false,
-            true
-        );
+        $img = JHtml::image("com_ostoolbar/icon-32-{$name}.png", null, null, true, true);
         if ($img) {
             $doc = JFactory::getDocument();
             $doc->addStyleDeclaration(".icon-32-{$name} { background-image: url({$img}); }");

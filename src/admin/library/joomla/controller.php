@@ -133,29 +133,32 @@ class OstoolbarController extends JControllerLegacy
     {
         $type     = JFactory::getApplication()->input->get("type");
         $data     = file_get_contents('php://input');
-        $com_path = JPATH_SITE . "/administrator/components/com_ostoolbar";
         switch ($type) {
             case "jform[panel_logo]":
-                $path = $com_path . "/assets/images/ost-logo.png";
-                break;
-            case "jform[menu_logo]":
-                $path = $com_path . "/assets/images/ost_icon.png";
-                break;
-            case "jform[tutorial_logo]":
-                $path = $com_path . "/assets/images/icon-tutorials-small.png";
-                break;
-            case "jform[plugin_logo]":
-                $path = JPATH_SITE . "/media/plg_quickicon_ostoolbar/images/ost_icon_24.png";
+                $imageFile = 'ost-logo.png';
                 break;
 
-            default:
-                $path = '';
+            case "jform[menu_logo]":
+                $imageFile = 'ost_icon.png';
                 break;
+
+            case "jform[tutorial_logo]":
+                $imageFile = 'icon-tutorials-small.png';
+                break;
+
+            case "jform[plugin_logo]":
+                $imageFile = "quickicon/ost_icon_24.png";
+                break;
+
         }
 
-        echo($path);
-        JFile::write($path, $data);
-        echo("{success:true}");
+        if (!empty($imageFile)) {
+            if ($path = JHtml::_('image', 'com_ostoolbar/' . $imageFile, null, null, true, true)) {
+                echo($path);
+                JFile::write($path, $data);
+                echo("{success:true}");
+            }
+        }
         exit();
     }
 

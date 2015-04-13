@@ -10,8 +10,7 @@ if (!$user->authorise('view.frontend', 'com_ostoolbar')) {
 
 require_once JPATH_ADMINISTRATOR . '/components/com_ostoolbar/library/include.php';
 
-$doc = JFactory::getDocument();
-$doc->addStyleSheet(JURI::Root() . "components/com_ostoolbar/assets/css/ostoolbar.css");
+JHtml::_('stylesheet', 'com_ostoolbar/ostoolbar.css', null, true);
 
 $controller = JControllerLegacy::getInstance('ostoolbar');
 $controller->execute(JFactory::getApplication()->input->getCmd('task', ''));

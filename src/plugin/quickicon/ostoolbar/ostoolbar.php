@@ -25,7 +25,8 @@ class plgQuickiconOSToolbar extends JPlugin
             return array();
         }
 
-        $image = '../media/plg_quickicon_ostoolbar/images/ost_icon_16.png';
+        $image = JHtml::_('image', 'com_ostoolbar/quickicon/ost_icon_16.png', null, null, true, true);
+
         JFactory::getDocument()
             ->addStyleDeclaration(".icon-ostoolbar {background:url('{$image}')}");
 

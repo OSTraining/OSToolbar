@@ -34,11 +34,10 @@ class JFormFieldVideos extends JFormField
             }
         endfor;
 
+        JHtml::_('script', 'http://code.jquery.com/ui/1.10.0/jquery-ui.js');
+        JHtml::_('stylesheet', 'com_ostoolbar/ui-lightness/jquery-ui-1.8.6.custom.css', null, true);
+
         $document = JFactory::getDocument();
-        $document->addScript('http://code.jquery.com/ui/1.10.0/jquery-ui.js');
-        $document->addStyleSheet(
-            JURI::root() . 'administrator/components/com_ostoolbar/assets/css/ui-lightness/jquery-ui-1.8.6.custom.css'
-        );
         $document->addStyleDeclaration(
             "#jform_videos-lbl{display:none}
 				#sortable1, #sortable2 {
