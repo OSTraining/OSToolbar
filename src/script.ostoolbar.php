@@ -6,133 +6,115 @@
  * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
  */
 
+use Alledia\Installer\AbstractScript;
+
 defined('_JEXEC') or die();
 
-class com_ostoolbarInstallerScript
+$includePath = __DIR__ . '/admin/library';
+if (!is_dir($includePath)) {
+    $includePath = __DIR__ . '/library';
+}
+
+if (file_exists($includePath . '/Installer/include.php')) {
+    require_once $includePath . '/Installer/include.php';
+} else {
+    throw new Exception('[OSToolbar] Alledia Installer not found');
+}
+
+class com_ostoolbarInstallerScript extends AbstractScript
 {
     /**
-     * @param string                     $type
-     * @param JInstallerAdapterComponent $parent
+     * @var array Related extensions required or useful with the component
+     *            type => [ (folder) => [ (element) => [ (publish), (uninstall), (ordering) ] ] ]
+     */
+    protected $relatedExtensions = array(
+        'plugin' => array(
+            'quickicon' => array(
+                'ostoolbar' => array(1, 1, null)
+            ),
+            'system'   => array(
+                'ostoolbar' => array(1, 1, null)
+            )
+        )
+    );
+
+    /**
+     * Install related extensions
+     * Overriding the Alledia Install because we're specifying some additional things
+     * @TODO: Remove when AllediaInstaller is updated with this enhancement
      *
-     * @return bool
+     * @return void
      */
-    public function preFlight($type, $parent)
+    protected function installRelated()
     {
-        if ($type == 'discover_install') {
-            JFactory::getApplication()->enqueueMessage('Discover Install is not available for this component', 'error');
-            return false;
-        }
+        parent::installRelated();
 
-        return true;
+        if ($this->relatedExtensions) {
+            $source = $this->installer->getPath('source');
+
+            foreach ($this->relatedExtensions as $type => $folders) {
+                foreach ($folders as $folder => $extensions) {
+                    foreach ($extensions as $element => $settings) {
+                        $path = $source . '/' . $type;
+                        if ($type == 'plugin') {
+                            $path .= '/' . $folder;
+                        }
+                        $path .= '/' . $element;
+                        if (is_dir($path)) {
+                            $current = $this->findExtension($type, $element, $folder);
+                            $isNew   = empty($current);
+
+                            $typeName  = trim(($folder ?: '') . ' ' . $type);
+                            $text      = 'LIB_ALLEDIAINSTALLER_RELATED_' . ($isNew ? 'INSTALL' : 'UPDATE');
+                            $installer = new JInstaller();
+                            if ($installer->install($path)) {
+                                $this->setMessage(JText::sprintf($text, $typeName, $element));
+                                if ($isNew) {
+                                    $current = $this->findExtension($type, $element, $folder);
+                                    if ($settings[0]) {
+                                        $current->publish();
+                                    }
+                                    if ($settings[2] && ($type == 'plugin')) {
+                                        $this->setPluginOrder($current, $settings[2]);
+                                    }
+                                }
+                            } else {
+                                $this->setMessage(JText::sprintf($text . '_FAIL', $typeName, $element), 'error');
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
-     * @param JInstallAdapterComponent $parent
+     * Uninstall the related extensions that are useless without the component
      */
-    public function install($parent)
+    protected function uninstallRelated()
     {
-        $this->uninstallRelated();
-        $this->installRelated();
-    }
+        parent::uninstallRelated();
 
-    /**
-     * @param JInstallAdapterComponent $parent
-     */
-    public function update($parent)
-    {
-        $this->uninstallRelated();
-        $this->installRelated();
-    }
+        if ($this->relatedExtensions) {
+            $installer = new JInstaller();
 
-    /**
-     * @param JInstallAdapterComponent $parent
-     */
-    public function uninstall($parent)
-    {
-        $this->uninstallRelated();
-    }
-
-    public function installRelated()
-    {
-        $cache = JFactory::getCache('com_ostoolbar', 'callback');
-        $cache->clean();
-
-        $cache = JFactory::getCache('com_ostoolbar_trial', 'callback');
-        $cache->clean();
-
-        $db        = JFactory::getDBO();
-        $src       = dirname(__FILE__);
-        $installer = new JInstaller;
-
-        // Install the quickicon plugin
-        $result = $installer->install($src . '/exts/plg_quickicon_ostoolbar');
-        if ($result) {
-            $query = $db->getQuery(true)
-                ->update('#__extensions')
-                ->set('enabled = 1')
-                ->where(
-                    array(
-                        'type = ' . $db->quote('plugin'),
-                        'element = ' . $db->quote('ostoolbar'),
-                        'folder=' . $db->quote('quickicon')
-                    )
-                );
-            $db->setQuery($query)->execute();
-        }
-
-        // Install the system plugin
-        $result = $installer->install($src . '/exts/plg_system_ostoolbar');
-        if ($result) {
-            $query = $db->getQuery(true)
-                ->update('#__extensions')
-                ->set('enabled = 1')
-                ->where(
-                    array(
-                        'type = ' . $db->quote('plugin'),
-                        'element = ' . $db->quote('ostoolbar'),
-                        'folder = ' . $db->quote('system')
-                    )
-                );
-            $db->setQuery($query)->execute();
-        }
-
-    }
-
-    public function uninstallRelated()
-    {
-        $db        = JFactory::getDBO();
-        $installer = new JInstaller;
-
-        $query = $db->getQuery(true)
-            ->select('extension_id')
-            ->from('#__extensions')
-            ->where(
-                array(
-                    'type = ' . $db->quote('plugin'),
-                    'element = ' . $db->quote('ostoolbar'),
-                    'folder=' . $db->quote('quickicon')
-                )
-            );
-
-        $id = $db->setQuery($query)->loadResult();
-        if ($id) {
-            $installer->uninstall('plugin', $id, 1);
-        }
-
-        $query = $db->getQuery(true)
-            ->select('extension_id')
-            ->from('#__extensions')
-            ->where(
-                array(
-                    'type = ' . $db->quote('plugin'),
-                    'element = ' . $db->quote('ostoolbar'),
-                    'folder=' . $db->quote('system')
-                )
-            );
-
-        $id = $db->setQuery($query)->loadResult();
-        if ($id) {
-            $installer->uninstall('plugin', $id, 1);
+            foreach ($this->relatedExtensions as $type => $folders) {
+                foreach ($folders as $folder => $extensions) {
+                    foreach ($extensions as $element => $settings) {
+                        if ($settings[1]) {
+                            if ($current = $this->findExtension($type, $element, $folder)) {
+                                $msg     = 'LIB_ALLEDIAINSTALLER_RELATED_UNINSTALL';
+                                $msgtype = 'message';
+                                if (!$installer->uninstall($current->type, $current->extension_id)) {
+                                    $msg .= '_FAIL';
+                                    $msgtype = 'error';
+                                }
+                                $this->setMessage(JText::sprintf($msg, $type, $element), $msgtype);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
