@@ -1,0 +1,23 @@
+{
+    "name"             : "Alledia/OSToolbar",
+    "description"      : "OSToolbar",
+    "minimum-stability": "stable",
+    "license"          : "GPL-2+",
+    "type"             : "joomla.component",
+    "extra"            : {
+        "element"        : "com_ostoolbar",
+        "element-short"  : "ostoolbar",
+        "name"           : "OSToolbar",
+        "client"         : "administrator",
+        "package-license": "free"
+    },
+    "authors": [
+        {
+            "name" : "Alledia.com",
+            "email": "hello@alledia.com"
+        }
+    ],
+    "require": {
+        "php": ">= 5.3"
+    }
+}
