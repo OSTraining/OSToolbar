@@ -70,9 +70,9 @@ class OstoolbarRestRequest
 class JRestResponse
 {
     protected $headers = array();
-    protected $body = null;
-    protected $info = null;
-    protected $error = null;
+    protected $body    = null;
+    protected $info    = null;
+    protected $error   = null;
 
     public function __construct(&$handle, $receive_headers)
     {

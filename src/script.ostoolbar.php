@@ -11,7 +11,7 @@ defined('_JEXEC') or die();
 class com_ostoolbarInstallerScript
 {
     /**
-     * @param string                      $type
+     * @param string                     $type
      * @param JInstallerAdapterComponent $parent
      *
      * @return bool

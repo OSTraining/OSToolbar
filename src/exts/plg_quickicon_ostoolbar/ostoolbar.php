@@ -31,10 +31,10 @@ class plgQuickiconOSToolbar extends JPlugin
 
         return array(
             array(
-                'link' => 'index.php?option=com_ostoolbar',
+                'link'  => 'index.php?option=com_ostoolbar',
                 'image' => 'ostoolbar',
-                'text' => JText::_('PLG_QUICKICON_OSTOOLBAR'),
-                'id' => 'plg_quickicon_ostoolbar'
+                'text'  => JText::_('PLG_QUICKICON_OSTOOLBAR'),
+                'id'    => 'plg_quickicon_ostoolbar'
             )
         );
     }

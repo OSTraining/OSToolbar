@@ -67,9 +67,9 @@ class JFormFieldLogo extends JFormField
         <script>
             //function createUploader<?php echo($this->id);?>(){
             var uploader<?php echo($this->id);?> = new qq.FileUploader({
-                element: document.getElementById('file-uploader-<?php echo($this->id);?>'),
-                action: '<?php echo JURI::root();?>administrator/index.php?option=com_ostoolbar&task=updatelogo&type=<?php echo($this->name);?>',
-                multiple: false,
+                element   : document.getElementById('file-uploader-<?php echo($this->id);?>'),
+                action    : '<?php echo JURI::root();?>administrator/index.php?option=com_ostoolbar&task=updatelogo&type=<?php echo($this->name);?>',
+                multiple  : false,
                 onComplete: function onUploadComplete<?php echo($this->id);?>() {
                     var obj = document.getElementById("img_<?php echo($this->id);?>");
                     var new_image = new Image();
@@ -77,7 +77,7 @@ class JFormFieldLogo extends JFormField
                     obj.removeChild(obj.firstChild);
                     obj.appendChild(new_image);
                 },
-                debug: false
+                debug     : false
             });
             //}
 

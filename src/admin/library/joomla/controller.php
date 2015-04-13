@@ -12,7 +12,7 @@ jimport('joomla.model.model');
 
 class OstoolbarController extends JControllerLegacy
 {
-    protected $option = null;
+    protected $option       = null;
     protected $saved_object = null;
 
     public function __construct($params = array())

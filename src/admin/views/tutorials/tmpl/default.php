@@ -34,7 +34,7 @@ if ($app->input->getCmd('tmpl', '') == 'component') {
             }
             $index = 0;
             for ($i = 0; $i < count($this->rows); $i++) :
-                $row = $this->rows[$i];
+                $row   = $this->rows[$i];
                 if (
                     !in_array($row->jversion, array("1.6_trial"))
                     && is_array($selected) && count($selected)
@@ -50,7 +50,7 @@ if ($app->input->getCmd('tmpl', '') == 'component') {
                         <?php echo JHtml::link($row->link, $row->title, $target); ?>
                     </td>
                     <td class="tutcat">
-                        <?php echo $row->ostcat_name ? : '--'; ?>
+                        <?php echo $row->ostcat_name ?: '--'; ?>
                     </td>
                 </tr>
             <?php endfor; ?>

@@ -40,7 +40,7 @@ class JFormFieldLanguage extends JFormField
             ob_start();
             ?>
             <script>
-                window.addEvent('domready', function () {
+                window.addEvent('domready', function() {
                     $$('p.tab-description')[0].innerHTML = '<?php echo(JText::_('COM_OSTOOLBAR_API_KEY_ERROR'));?>';
                     $('permissions-sliders').outerHTML = '';
 
@@ -174,10 +174,10 @@ class JFormFieldLanguage extends JFormField
                 //var jsonstr = "{"+myJsonify( translates )+"}";
                 var jsonstr = JSON.stringify(translates);
                 var ajax = new Request({
-                    method: "POST",
-                    data: "language_data=" + jsonstr,
+                    method    : "POST",
+                    data      : "language_data=" + jsonstr,
                     onComplete: DisplaySummary,
-                    url: '<?php echo JURI::root();?>administrator/index.php?option=com_ostoolbar&task=updatelanguage'
+                    url       : '<?php echo JURI::root();?>administrator/index.php?option=com_ostoolbar&task=updatelanguage'
                 });
                 ajax.send();
                 document.getElementById("btn_apply_lang").disabled = true;

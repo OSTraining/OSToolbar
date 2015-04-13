@@ -5,8 +5,8 @@ jimport('joomla.application.component.view');
 
 class OstoolbarViewTutorials extends OstoolbarViewAdmin
 {
-    protected $model = null;
-    protected $rows = array();
+    protected $model   = null;
+    protected $rows    = array();
     protected $filters = null;
 
     public function display($tpl = null)

@@ -11,7 +11,7 @@ defined('_JEXEC') or die();
 abstract class OstoolbarRequest
 {
     public static $host_url = 'https://www.ostraining.com/';
-    public static $isTrial = false;
+    public static $isTrial  = false;
 
     public static function getHostUrl()
     {

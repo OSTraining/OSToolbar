@@ -11,10 +11,10 @@ defined('_JEXEC') or die();
 abstract class OstoolbarCache
 {
     const CACHE_GROUP = 'com_ostoolbar';
-    const DAY = 86400;
-    const HALF_DAY = 43200;
-    const HOUR = 3600;
-    const MINUTE = 60;
+    const DAY         = 86400;
+    const HALF_DAY    = 43200;
+    const HOUR        = 3600;
+    const MINUTE      = 60;
 
     public static function getCache($object, $method, $args, $cache)
     {

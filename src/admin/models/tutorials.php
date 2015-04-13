@@ -12,8 +12,8 @@ jimport('joomla.application.component.model');
 
 class OstoolbarModelTutorials extends OstoolbarModel
 {
-    protected $view = null;
-    protected $context = null;
+    protected $view       = null;
+    protected $context    = null;
     protected $pagination = null;
 
     protected $data = null;
