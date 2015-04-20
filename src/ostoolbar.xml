@@ -40,6 +40,7 @@
         <element>ostoolbar</element>
         <namespace>OSToolbar</namespace>
         <license>free</license>
+        <include>AllediaFreeDefaultFiles</include>
 
         <relatedExtensions>
             <extension
