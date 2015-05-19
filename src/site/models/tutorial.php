@@ -1,14 +1,10 @@
 <?php
 defined('_JEXEC') or die;
-jimport('joomla.application.component.modellegacy');
 
-class OSToolbarModelTutorial extends JModelLegacy
+class OSToolbarModelTutorial extends OstoolbarModel
 {
-
     protected function populateState()
     {
-        $app = JFactory::getApplication();
-
         $id = JRequest::getVar('cid', array(), 'request', 'array');
         if (empty($id)) :
             $id = JRequest::getInt('id', 0);
@@ -17,7 +13,6 @@ class OSToolbarModelTutorial extends JModelLegacy
         endif;
 
         $this->setState('id', $id);
-
     }
 
     public function getData()

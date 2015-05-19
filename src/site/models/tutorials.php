@@ -2,14 +2,10 @@
 defined('_JEXEC') or die;
 jimport('joomla.application.component.modellegacy');
 
-class OSToolbarModelTutorials extends JModellegacy
+class OSToolbarModelTutorials extends OstoolbarModel
 {
-
-
     public function getList()
     {
-        $cids = JRequest::getVar('cid', array());
-        //$this->data = $this->_fetchList();
         $this->data = OstoolbarCache::callback($this, '_fetchList', array(), null, true);
 
         $params   = JComponentHelper::getParams('com_ostoolbar');
@@ -41,7 +37,6 @@ class OSToolbarModelTutorials extends JModellegacy
 
         if ($response->hasError()) :
             JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_ERROR'), 'error');
-            //$this->setError(JText::_('COM_OSTOOLBAR_ERROR').':  '.$response->getErrorMsg().' ('.JText::_('COM_OSTOOLBAR_ERROR_CODE').' '.$response->getErrorCode().')');
             return false;
         endif;
 
@@ -53,6 +48,4 @@ class OSToolbarModelTutorials extends JModellegacy
 
         return $list;
     }
-
-
 }
