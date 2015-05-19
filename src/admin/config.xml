@@ -27,18 +27,6 @@
     </fieldset>
 
     <fieldset
-        name="com_ostoolbar_language"
-        label="COM_OSTOOLBAR_SETTINGS_LANGUAGE"
-        addfieldpath="/administrator/components/com_ostoolbar/models/fields">
-        <field
-            name="language"
-            type="language"
-            default=""
-            label="COM_OSTOOLBAR_LANGUAGE"
-            description="COM_OSTOOLBAR_LANGUAGE_DESC"/>
-    </fieldset>
-
-    <fieldset
         name="permissions"
         label="JCONFIG_PERMISSIONS_LABEL"
         description="JCONFIG_PERMISSIONS_DESC">
