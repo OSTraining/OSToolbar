@@ -10,8 +10,6 @@ if (!$user->authorise('view.frontend', 'com_ostoolbar')) {
 
 require_once JPATH_ADMINISTRATOR . '/components/com_ostoolbar/library/include.php';
 
-JHtml::_('stylesheet', 'com_ostoolbar/ostoolbar.css', null, true);
-
 $controller = JControllerLegacy::getInstance('ostoolbar');
 $controller->execute(JFactory::getApplication()->input->getCmd('task', ''));
 $controller->redirect();

@@ -25,6 +25,7 @@ if (!defined('OSTOOLBAR_LOADED')) {
 
             case 'site':
                 JModelLegacy::addIncludePath(OSTOOLBAR_SITE . '/models');
+                JHtml::_('stylesheet', 'com_ostoolbar/ostoolbar.css', null, true);
                 break;
         }
     }

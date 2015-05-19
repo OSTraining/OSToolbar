@@ -8,9 +8,7 @@
 
 defined('_JEXEC') or die();
 
-jimport('joomla.application.component.controllerLegacy');
-
-class OstoolbarController extends JControllerLegacy
+class OstoolbarController extends OstoolbarControllerSite
 {
     protected $default_view = 'tutorials';
 }
