@@ -24,7 +24,7 @@
     </media>
 
     <administration>
-        <menu img="../media/com_ostoolbar/images/icon-16-tutorials.png">COM_OSTOOLBAR</menu>
+        <menu img="../media/com_ostoolbar/images/icon-16-ostoolbar.png">COM_OSTOOLBAR</menu>
         <files folder="admin">
             <filename>ostoolbar.php</filename>
             <filename>access.xml</filename>
@@ -46,13 +46,6 @@
             <extension
                 type="library"
                 element="allediaframework">AllediaFramework</extension>
-
-            <extension
-                type="plugin"
-                group="system"
-                element="ossystem"
-                publish="true"
-                ordering="first">OSSystem</extension>
         </relatedExtensions>
     </alledia>
 
