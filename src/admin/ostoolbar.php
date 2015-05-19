@@ -22,6 +22,6 @@ $command = $input->getCmd('task', 'display');
 
 jimport('joomla.application.component.controller');
 
-$controller = new OstoolbarController();
+$controller = JControllerLegacy::getInstance('ostoolbar');
 $controller->execute($input->getCmd('task', ''));
 $controller->redirect();
