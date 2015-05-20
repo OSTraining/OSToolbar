@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.0" type="plugin" group="quickicon" method="upgrade">
-    <name>plg_quickicon_ostoolbar</name>
-    <author>OSTraining</author>
-    <creationDate>Febrary 2012</creationDate>
-    <copyright>Copyright (C) 2012 OSTraining. All rights reserved.</copyright>
-    <license></license>
-    <authorEmail>thanh@ostraining.com</authorEmail>
-    <authorUrl>www.ostraining.com</authorUrl>
-    <version>1.5.8</version>
+    <name>PLG_QUICKICON_OSTOOLBAR</name>
+    <author>Alledia</author>
+    <creationDate>May 20 2015</creationDate>
+    <copyright>Copyright (C) 2015 Open Source Training, LLC</copyright>
+    <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+    <authorEmail>support@alledia.com</authorEmail>
+    <authorUrl>https://www.alledia.com</authorUrl>
+    <version>1.6.0</version>
     <description>PLG_QUICKICON_OSTOOLBAR_XML_DESCRIPTION</description>
 
     <files>
+        <folder>language</folder>
         <filename plugin="ostoolbar">ostoolbar.php</filename>
     </files>
-
-    <languages>
-        <language tag="en-GB">en-GB.plg_quickicon_ostoolbar.ini</language>
-        <language tag="en-GB">en-GB.plg_quickicon_ostoolbar.sys.ini</language>
-    </languages>
 </extension>
