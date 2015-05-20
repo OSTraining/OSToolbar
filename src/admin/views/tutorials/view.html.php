@@ -31,7 +31,7 @@ class OstoolbarViewTutorials extends OstoolbarViewAdmin
         $params = JComponentHelper::getParams('com_ostoolbar');
         if (OstoolbarRequest::$isTrial) {
             if ($params->get('api_key')) {
-                JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_INVALIAD'), 'error');
+                JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_INVALID'), 'error');
             }
         }
 

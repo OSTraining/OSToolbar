@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <fieldset
-        name="com_ostoolbar"
+        name="basic"
         label="COM_OSTOOLBAR_SETTINGS">
         <field
             name="api_key"
@@ -14,7 +14,7 @@
     </fieldset>
 
     <fieldset
-        name="com_ostoolbar_videos"
+        name="videos"
         label="COM_OSTOOLBAR_SETTINGS_VIDEOS"
         addfieldpath="/administrator/components/com_ostoolbar/models/fields">
         <field
