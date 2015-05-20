@@ -9,6 +9,8 @@ class JFormFieldVideos extends JFormField
 
     protected function getInput()
     {
+        return '';
+
         OstoolbarSystem::check();
 
         $model     = JModelLegacy::getInstance('Tutorials', 'OSToolbarModel');
@@ -89,9 +91,9 @@ class JFormFieldVideos extends JFormField
         ob_start();
         ?>
         <div>
-            <div style="float:left; width:270px"><?php echo(JText::_("ORGINAL_VIDEOS")); ?></div>
+            <div style="float:left; width:270px"><?php echo(JText::_("COM_OSTOOLBAR_HIDDEN_VIDEOS")); ?></div>
             <div style="float:left; width:50px">&nbsp;</div>
-            <div style="float:left; width:250px"><?php echo(JText::_("COLLECTION")); ?></div>
+            <div style="float:left; width:250px"><?php echo(JText::_("COM_OSTOOLBAR_SELECTED_VIDEOS")); ?></div>
             <div style="clear:both"></div>
         </div>
         <div class='sortable_holder'>
@@ -109,7 +111,7 @@ class JFormFieldVideos extends JFormField
                     <li class="ui-state-default" id="s_<?php echo $item->id; ?>"><?php echo $name; ?></li>
                 <?php endfor; ?>
             </ul>
-            <div style="float:left; width:50px"><?php echo(JText::_("DRAP_DROP_TO_COLLECT")); ?></div>
+            <div style="float:left; width:50px"><?php echo(JText::_("COM_OSTOOLBAR_DRAG_DROP_VIDEOS")); ?></div>
             <ul id="sortable2" class="connectedSortable">
                 <?php
                 for ($i = 0; $i < count($selected); $i++) :

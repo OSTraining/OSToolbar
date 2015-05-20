@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-    <layout title="COM_OSTOOLBAR_VIEW_TUTORIALS_DEFAULT_TITLE">
+    <view
+        title="COM_OSTOOLBAR_VIEW_TUTORIALS_DEFAULT_TITLE">
         <message><![CDATA[COM_OSTOOLBAR_VIEW_TUTORIALS_DEFAULT_DESC]]></message>
-    </layout>
+    </view>
 </metadata>

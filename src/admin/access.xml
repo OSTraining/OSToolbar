@@ -3,6 +3,6 @@
     <section name="component">
         <action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC"/>
         <action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC"/>
-        <action name="view.frontend" title="JACTION_FRONTEND" description="JACTION_FRONTEND_DESC"/>
+        <action name="view.frontend" title="COM_OSTOOLBAR_ACCESS_FRONT" description="COM_OSTOOLBAR_ACCESS_FRONT_DESC"/>
     </section>
 </access>

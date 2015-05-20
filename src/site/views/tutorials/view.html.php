@@ -5,11 +5,11 @@ jimport('joomla.application.component.viewlegacy');
 
 class OSToolbarViewTutorials extends JViewLegacy
 {
-    var $items;
+    protected $items;
 
-    function display($tpl = null)
+    public function display($tpl = null)
     {
-        $this->items = $this->get("List");
+        $this->items = $this->get('List');
         parent::display($tpl);
     }
 }
