@@ -18,6 +18,8 @@ abstract class OstoolbarHelper
         }
 
         JHtml::_('script', 'com_ostoolbar/jquery.js', false, true);
+        JFactory::getDocument()->addScriptDeclaration('jQuery.noConflict();');
+
         JHtml::_('script', 'com_ostoolbar/jquery-ui-1.8.6.custom.min.js', false, true);
 
         JHtml::_('stylesheet', 'com_ostoolbar/admin/ostoolbar.css', null, true);
