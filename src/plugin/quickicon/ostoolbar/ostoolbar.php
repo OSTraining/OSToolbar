@@ -18,22 +18,16 @@ class plgQuickiconOSToolbar extends JPlugin
 
     public function onGetIcons($context)
     {
-        if (
-            $context != $this->params->get('context', 'mod_quickicon')
-            || !JFactory::getUser()->authorise('core.manage', 'com_installer')
+        if ($context != $this->params->get('context', 'mod_quickicon')
+            || !JFactory::getUser()->authorise('core.manage', 'com_ostoolbar')
         ) {
             return array();
         }
 
-        $image = JHtml::_('image', 'com_ostoolbar/quickicon/ost_icon_16.png', null, null, true, true);
-
-        JFactory::getDocument()
-            ->addStyleDeclaration(".icon-ostoolbar {background:url('{$image}')}");
-
         return array(
             array(
                 'link'  => 'index.php?option=com_ostoolbar',
-                'image' => 'ostoolbar',
+                'image' => 'com_ostoolbar/icon-48-ostoolbar.png',
                 'text'  => JText::_('PLG_QUICKICON_OSTOOLBAR'),
                 'id'    => 'plg_quickicon_ostoolbar'
             )

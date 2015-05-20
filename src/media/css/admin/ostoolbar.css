@@ -7,7 +7,7 @@ div.padding div#toolbar-box div.m {
 }
 
 .ost-logo {
-    background: url(../../images/ost-logo.png) no-repeat;
+    background: url(../../images/logo.png) no-repeat;
     background-position: 10px 50%;
     padding: 0 0 0 0;
     margin: 0 0 0 0;
@@ -17,7 +17,6 @@ div.padding div#toolbar-box div.m {
 div.ost-logo span.header_text {
     font-size: 16px;
     font-weight: normal;
-    padding: 0;
     margin: 0 0 0 265px;
     padding: 24px 0 0 0;
     display: block;
@@ -58,5 +57,3 @@ h3.error_title {
     color: #c02f03;
     border-bottom: 1px dashed #CCC;
 }
-
-/*-----------tutorials-----------------------*/
