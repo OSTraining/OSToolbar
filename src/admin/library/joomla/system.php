@@ -2,6 +2,13 @@
 
 abstract class OstoolbarSystem
 {
+    protected static $phpMinimumVersion = '5.3';
+
+    /**
+     * Check system requirements
+     *
+     * @return array
+     */
     public static function check()
     {
         $pass   = true;
@@ -12,10 +19,7 @@ abstract class OstoolbarSystem
             $errors['curl'] = true;
         }
 
-        $version       = explode(".", phpversion());
-        $major_version = $version[0];
-
-        if ($major_version < 5) {
+        if (version_compare(phpversion(), static::$phpMinimumVersion, 'lt')) {
             $pass          = false;
             $errors['php'] = true;
         }
@@ -25,32 +29,45 @@ abstract class OstoolbarSystem
 
     public static function displayErrors($errors)
     {
-        JHtml::_('stylesheet', 'com_ostoolbar/admin/ostoolbar.css', null, true);
+        $toolbar = array(
+            '<div class="header ost-logo">',
+            '<span class="header_text">' . JText::_('COM_OSTOOLBAR_ERROR') . '</span>',
+            '</div>'
+        );
+        JFactory::getApplication()->set('JComponentTitle', join("\n", $toolbar));
 
-        $toolbar = "<div class='header ost-logo'>\n"
-            . "<span class='header_text'>" . JText::_('COM_OSTOOLBAR_ERROR') . "</span>\n"
-            . "</div>\n";
-
-        $app = JFactory::getApplication()->set('JComponentTitle', $toolbar);
-
-        $html = "<h1>" . JText::_('COM_OSTOOLBAR_ERROR_PAGE_HEADING') . "</h1>"
-            . "<p class='errormessage'>" . JText::_('COM_OSTOOLBAR_ERROR_PAGE_DESC') . "</p>";
+        $html = array(
+            '<h1>' . JText::_('COM_OSTOOLBAR_ERROR_PAGE_HEADING') . '</h1>',
+            '<p class="errormessage">' . JText::_('COM_OSTOOLBAR_ERROR_PAGE_DESC') . '</p>'
+        );
 
         if ($errors['curl']) {
-            $html .= "<div class='error_msg'>"
-                . "<h3 class='error_title'>" . JText::_("COM_OSTOOLBAR_CURL_ERROR") . "</h3>"
-                . "<p class='error_desc'>" . JText::_("COM_OSTOOLBAR_CURL_DESC") . "</p>"
-                . "</div>";
+            $html = array_merge(
+                $html,
+                array(
+                    '<div class="error_msg">',
+                    '<h3 class="error_title">' . JText::_('COM_OSTOOLBAR_CURL_ERROR') . '</h3>',
+                    '<p class="error_desc">' . JText::_('COM_OSTOOLBAR_CURL_DESC') . '</p>',
+                    '</div>'
+                )
+            );
         }
 
         if ($errors['php']) {
-            $html .= "<div class='error_msg'>"
-                . "<h3 class='error_title'>" . JText::_("COM_OSTOOLBAR_PHP_ERROR") . "</h3>"
-                . "<p class='error_desc'>" . JText::_("COM_OSTOOLBAR_PHP_DESC") . "</p>"
-                . "</div>";
+            $html = array_merge(
+                $html,
+                array(
+                    '<div class="error_msg">'
+                    . '<h3 class="error_title">' . JText::_('COM_OSTOOLBAR_PHP_ERROR') . '</h3>'
+                    . '<p class="error_desc">'
+                    . JText::sprintf('COM_OSTOOLBAR_PHP_DESC', static::$phpMinimumVersion)
+                    . '</p>'
+                    . '</div>'
+                )
+            );
         }
 
-        echo $html;
+        echo join("\n", $html);
     }
 
 }
