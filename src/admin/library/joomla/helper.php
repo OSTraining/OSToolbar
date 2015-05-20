@@ -10,22 +10,6 @@ defined('_JEXEC') or die();
 
 abstract class OstoolbarHelper
 {
-    public static function adminInit()
-    {
-        $app = JFactory::getApplication();
-        if ($app->input->getCmd('format', '') == 'raw') {
-            return false;
-        }
-
-        JHtml::_('script', 'com_ostoolbar/jquery.js', false, true);
-        JFactory::getDocument()->addScriptDeclaration('jQuery.noConflict();');
-
-        JHtml::_('script', 'com_ostoolbar/jquery-ui-1.8.6.custom.min.js', false, true);
-
-        JHtml::_('stylesheet', 'com_ostoolbar/admin/ostoolbar.css', null, true);
-        JHtml::_('stylesheet', 'com_ostoolbar/ui-lightness/jquery-ui-1.8.6.custom.css', null, true);
-    }
-
     public static function splitList($string, $delimiter = ",")
     {
         $list = preg_split("/\s*" . $delimiter . "\s*/", $string);

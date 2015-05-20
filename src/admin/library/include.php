@@ -16,17 +16,17 @@ if (!defined('OSTOOLBAR_LOADED')) {
     // Initiate auto-loader
     require_once OSTOOLBAR_ADMIN . '/library/joomla/loader.php';
 
-    $app = JFactory::getApplication();
-    if ($app->input->getCmd('option', '') != 'com_ostoolbar') {
-        switch ($app->getName()) {
-            case 'administrator':
-                JModelLegacy::addIncludePath(OSTOOLBAR_ADMIN . '/models');
-                break;
+    JHtml::addIncludePath(OSTOOLBAR_ADMIN . '/library/joomla/html');
 
-            case 'site':
-                JModelLegacy::addIncludePath(OSTOOLBAR_SITE . '/models');
-                JHtml::_('stylesheet', 'com_ostoolbar/ostoolbar.css', null, true);
-                break;
-        }
+    $app = JFactory::getApplication();
+    switch ($app->getName()) {
+        case 'administrator':
+            JModelLegacy::addIncludePath(OSTOOLBAR_ADMIN . '/models');
+            break;
+
+        case 'site':
+            JModelLegacy::addIncludePath(OSTOOLBAR_SITE . '/models');
+            JHtml::_('stylesheet', 'com_ostoolbar/ostoolbar.css', null, true);
+            break;
     }
 }

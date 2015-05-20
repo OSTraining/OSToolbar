@@ -9,6 +9,7 @@ class JFormFieldVideos extends JFormField
 
     protected function getInput()
     {
+
         $model     = JModelLegacy::getInstance('Tutorials', 'OSToolbarModel');
         $available = $model->getList(true);
 
@@ -18,8 +19,9 @@ class JFormFieldVideos extends JFormField
             return JText::_('COM_OSTOOLBAR_API_KEY_ERROR');
         }
 
-        OstoolbarHelper::adminInit();
-        JHtml::_('script', 'https://code.jquery.com/ui/1.10.0/jquery-ui.js');
+        JHtml::_('ost.jquery');
+        JHtml::_('script', 'com_ostoolbar/jquery-ui.js', false, true);
+        JHtml::_('stylesheet', 'com_ostoolbar/ui-lightness/jquery-ui.css', null, true);
 
         $selected = $this->value ? explode(',', $this->value) : array();
         $empty = !(bool)count($selected);

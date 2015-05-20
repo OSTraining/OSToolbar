@@ -6,13 +6,14 @@ if (!JFactory::getUser()->authorise('core.manage', 'com_ostoolbar')) {
 }
 
 require_once JPATH_ADMINISTRATOR . '/components/com_ostoolbar/library/include.php';
-OstoolbarHelper::adminInit();
 
 $check = OstoolbarSystem::check();
 if ($check['pass'] == false) {
     OstoolbarSystem::displayErrors($check['errors']);
     return;
 }
+
+JHtml::_('stylesheet', 'com_ostoolbar/admin/ostoolbar.css', null, true);
 
 // Crank up the controller
 $input   = JFactory::getApplication()->input;
