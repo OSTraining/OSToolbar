@@ -10,31 +10,27 @@ defined('_JEXEC') or die();
 
 abstract class OstoolbarRequest
 {
-    public static $host_url = 'https://www.ostraining.com/';
-    public static $isTrial  = false;
+    protected static $hostUrl = 'https://www.ostraining.com/';
+    public static    $isTrial = false;
 
     public static function getHostUrl()
     {
         $version = version_compare(JVERSION, '3', 'ge') ? '3.0' : '1.6';
-        $trial   = self::$isTrial ? '_trial' : '';
+        $trial   = static::$isTrial ? '_trial' : '';
 
         $vars = array(
             'option' => 'com_api',
             'v'      => $version . $trial
         );
 
-        return self::$host_url . 'index.php?' . http_build_query($vars);
-    }
-
-    public static function isTrial()
-    {
-        self::$isTrial = true;
+        return self::$hostUrl . 'index.php?' . http_build_query($vars);
     }
 
     public static function makeRequest($data)
     {
-        $cparams     = JComponentHelper::getParams('com_ostoolbar');
-        $static_data = array(
+        $cparams = JComponentHelper::getParams('com_ostoolbar');
+
+        $staticData = array(
             'format' => 'json',
             'key'    => $cparams->get('api_key')
         );
@@ -42,8 +38,7 @@ abstract class OstoolbarRequest
         if (!isset($data['app'])) {
             $data['app'] = 'tutorials';
         }
-
-        $data = array_merge($data, $static_data);
+        $data = array_merge($data, $staticData);
 
         $response = OstoolbarRestRequest::send(
             self::getHostUrl(),
@@ -56,6 +51,7 @@ abstract class OstoolbarRequest
                 CURLOPT_SSL_VERIFYHOST => false
             )
         );
+
         if ($body = $response->getBody()) {
             $response->setBody(json_decode($body));
         }
@@ -75,10 +71,10 @@ abstract class OstoolbarRequest
 
     public static function filter($text)
     {
-        $split   = explode('index.php', self::getHostUrl());
-        $ost_url = $split[0];
+        $split  = explode('index.php', static::getHostUrl());
+        $ostUrl = $split[0];
 
-        $text = preg_replace('#(href|src)="([^:"]*)("|(?:(?:%20|\s|\+)[^"]*"))#', '$1="' . $ost_url . '$2$3', $text);
+        $text = preg_replace('#(href|src)="([^:"]*)("|(?:(?:%20|\s|\+)[^"]*"))#', '$1="' . $ostUrl . '$2$3', $text);
 
         return $text;
     }

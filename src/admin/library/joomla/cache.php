@@ -24,18 +24,18 @@ abstract class OstoolbarCache
 
         if ($data === false) {
             // Copy current model for cache ID serialization
-            $obj_copy = clone $object;
+            $objCopy = clone $object;
 
             // Remove errors to return model to original state at cache call
-            if ($obj_copy->getError()) {
-                $obj_copy->set('_errors', array());
+            if ($objCopy->getError()) {
+                $objCopy->set('_errors', array());
             }
 
-            $callback = array($obj_copy, $method);
+            $callback = array($objCopy, $method);
             // Workaround for getting cache ID and manually removing cached results
             // Need a better way to do this
-            $id = self::makeCacheId($callback, $args);
-            $cache->remove($id, self::CACHE_GROUP);
+            $id = static::makeCacheId($callback, $args);
+            $cache->remove($id, static::CACHE_GROUP);
 
             $data = array();
         }
@@ -53,14 +53,14 @@ abstract class OstoolbarCache
         $cacheactive = $conf->get('config.caching');
         $cachetime   = $conf->get('config.cachetime');
 
-        $cache = JFactory::getCache(self::CACHE_GROUP, 'callback');
+        $cache = JFactory::getCache(static::CACHE_GROUP, 'callback');
 
         $key_error = false;
         $response  = OstoolbarRequest::makeRequest(array('resource' => 'checkapi'));
         if ($response->hasError() || $response->getBody() == 0) {
             $key_error = true;
-            $cache     = JFactory::getCache(self::CACHE_GROUP . "_trial", 'callback');
-            OstoolbarRequest::isTrial();
+            $cache     = JFactory::getCache(static::CACHE_GROUP . "_trial", 'callback');
+            OstoolbarRequest::$isTrial = true;
 
         }
 
@@ -71,7 +71,7 @@ abstract class OstoolbarCache
         if ($cache_lifetime) {
             $cache->setLifeTime($cache_lifetime);
         }
-        $data = self::getCache($object, $method, $args, $cache);
+        $data = static::getCache($object, $method, $args, $cache);
 
         if ($data !== false) {
             // In this case we have data in cache but just send minimum request to check update
@@ -81,7 +81,7 @@ abstract class OstoolbarCache
                 if (is_array($data)) {
                     if ((count($data) && strtotime($data[0]->last_update_date) < $last_update) || count($data) == 0) {
                         $cache->clean();
-                        $data = self::getCache($object, $method, $args, $cache);
+                        $data = static::getCache($object, $method, $args, $cache);
                     }
                 }
             }
