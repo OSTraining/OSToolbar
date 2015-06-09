@@ -10,17 +10,18 @@ defined('_JEXEC') or die();
 
 abstract class OstoolbarCache
 {
-    const CACHE_GROUP = 'com_ostoolbar';
-    const DAY         = 86400;
-    const HALF_DAY    = 43200;
-    const HOUR        = 3600;
-    const MINUTE      = 60;
+    const DAY      = 86400;
+    const HALF_DAY = 43200;
+    const HOUR     = 3600;
+    const MINUTE   = 60;
+
+    protected static $cacheGroup = null;
 
     public static function getCache($object, $method, $args, $cache)
     {
-        $callback   = array(array($object, $method));
-        $cache_args = array_merge($callback, $args);
-        $data       = call_user_func_array(array($cache, 'call'), $cache_args);
+        $callback  = array(array($object, $method));
+        $cacheArgs = array_merge($callback, $args);
+        $data      = call_user_func_array(array($cache, 'call'), $cacheArgs);
 
         if ($data === false) {
             // Copy current model for cache ID serialization
@@ -35,7 +36,7 @@ abstract class OstoolbarCache
             // Workaround for getting cache ID and manually removing cached results
             // Need a better way to do this
             $id = static::makeCacheId($callback, $args);
-            $cache->remove($id, static::CACHE_GROUP);
+            $cache->remove($id, static::$cacheGroup);
 
             $data = array();
         }
@@ -53,7 +54,10 @@ abstract class OstoolbarCache
         $cacheactive = $conf->get('config.caching');
         $cachetime   = $conf->get('config.cachetime');
 
-        $cache = JFactory::getCache(static::CACHE_GROUP, 'callback');
+        static::$cacheGroup  = 'com_ostoolbar';
+        static::$cacheGroup .= OstoolbarRequest::isTrial() ? '_trial' : '';
+
+        $cache = JFactory::getCache(static::$cacheGroup, 'callback');
         if ($overrideConfig) {
             $cache->setCaching(1); //enable caching
         }
@@ -76,9 +80,6 @@ abstract class OstoolbarCache
                 }
             }
         }
-        if (get_class($object) == "OSToolbarModelTutorial" && !empty($data)) {
-            $data->jversion =  OstoolbarRequest::isTrial() ? '1.6_trial' : '1.6';
-        }
 
         if ($overrideConfig) {
             $cache->setCaching($cacheactive);
@@ -92,7 +93,7 @@ abstract class OstoolbarCache
     }
 
     // Copy of private function in JCacheControllerCallback
-    public function makeCacheId($callback, $args)
+    public static function makeCacheId($callback, $args)
     {
         if (is_array($callback) && is_object($callback[0])) {
             $vars        = get_object_vars($callback[0]);
