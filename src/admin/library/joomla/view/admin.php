@@ -81,15 +81,6 @@ abstract class OstoolbarViewAdmin extends JViewLegacy
         $this->displayFooter();
     }
 
-    public function getLayout()
-    {
-        $layout = parent::getLayout();
-        if (version_compare(JVERSION, '3.0', 'lt')) {
-            $layout .= '.j2';
-        }
-        return $layout;
-    }
-
     /**
      * Default admin screen title
      *

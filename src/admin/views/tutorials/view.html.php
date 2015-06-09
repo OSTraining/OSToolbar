@@ -5,8 +5,16 @@ jimport('joomla.application.component.view');
 
 class OstoolbarViewTutorials extends OstoolbarViewAdmin
 {
+    /**
+     * @var OstoolbarModelTutorials
+     */
     protected $model   = null;
+
+    /**
+     * @var array
+     */
     protected $rows    = array();
+
     protected $filters = null;
 
     public function display($tpl = null)
@@ -16,9 +24,8 @@ class OstoolbarViewTutorials extends OstoolbarViewAdmin
         $this->model = $this->getModel();
 
         if ($app->input->get('session', 0) && $app->input->getCmd('tmpl', '') == 'component') {
-            $session    = JFactory::getSession();
-            $this->rows = $session->get('helparticles', array(), 'OSToolbar');
             $this->setLayout('popup');
+
         } else {
             $this->rows = $this->model->getList();
             if ($errors = $this->model->getErrors()) {
