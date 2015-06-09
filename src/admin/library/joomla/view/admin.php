@@ -20,39 +20,6 @@ abstract class OstoolbarViewAdmin extends JViewLegacy
      */
     protected $view = null;
 
-    protected function getMainViews()
-    {
-        $views = array(
-            array('name' => JText::_('COM_OSTOOLBAR_TUTORIALS'), 'view' => 'tutorials', 'icon' => 'icon-tutorials.png'),
-            array(
-                'name'  => JText::_('COM_OSTOOLBAR_PARAMETERS'),
-                'link'  => 'index.php?option=com_config&amp;view=component&amp;component=com_ostoolbar&amp;path=&amp;tmpl=component',
-                'rel'   => '{handler: \'iframe\', size: {x: 570, y: 400}}',
-                'class' => 'modal',
-                'icon'  => 'icon-parameters.png'
-            )
-        );
-        return $views;
-    }
-
-    protected function routeLayout($tpl)
-    {
-        $layout = ucwords(strtolower($this->getLayout()));
-
-        if ($layout == 'Default') {
-            return false;
-        }
-
-        $method_name = 'display' . $layout;
-        if (method_exists($this, $method_name) && is_callable(array($this, $method_name))) {
-            $this->$method_name($tpl);
-            return true;
-        } else {
-            $this->setLayout('default');
-            return false;
-        }
-    }
-
     public function display($tpl = null)
     {
         if (version_compare(JVERSION, '3.0', 'ge')) {
