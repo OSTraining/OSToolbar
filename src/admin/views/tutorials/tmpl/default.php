@@ -16,6 +16,7 @@ if ($app->input->getCmd('tmpl', '') == 'component') {
 }
 ?>
 <div class="ostoolbar">
+    <?php echo OstoolbarHelper::getTrialBanner(); ?>
     <form action='index.php' method='get' name='adminForm'>
         <div class="filter-search fltlft">
             <?php echo JText::_('COM_OSTOOLBAR_CATEGORY'); ?>

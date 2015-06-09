@@ -63,4 +63,38 @@ abstract class OstoolbarHelper
 
         $bar->appendButton('Custom', $html, $id);
     }
+
+    public static function getTrialBanner()
+    {
+        $app = JFactory::getApplication();
+        $params = JComponentHelper::getParams('com_ostoolbar');
+         $apikey = $params->get('api_key');
+
+        $html   = array();
+        if (OstoolbarRequest::isTrial()) {
+            if ($apikey) {
+                JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_INVALID'), 'error');
+
+            } else {
+                $linkAttribs = array(
+                    'href="https://www.ostraining.com/pricing/"',
+                    'target="_blank"',
+                    'class="btn btn-primary"'
+                );
+                $text        = sprintf(
+                    '%s <a %s>%s</a>',
+                    'Want more advanced videos?',
+                    join(' ', $linkAttribs),
+                    'Go Pro!'
+                );
+
+                $html = array(
+                    '<div class="alert alert-info text-center">',
+                    '<h4>' . $text . '</h4>',
+                    '</div>'
+                );
+            }
+        }
+        return join("\n", $html);
+    }
 }

@@ -27,4 +27,5 @@ defined('_JEXEC') or die();
             <?php echo JHTML::_('form.token'); ?>
         </form>
     </fieldset>
+    <?php echo OstoolbarHelper::getTrialBanner(); ?>
 </div>
