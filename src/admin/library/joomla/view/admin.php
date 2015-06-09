@@ -30,8 +30,7 @@ abstract class OstoolbarViewAdmin extends JViewLegacy
                 'rel'   => '{handler: \'iframe\', size: {x: 570, y: 400}}',
                 'class' => 'modal',
                 'icon'  => 'icon-parameters.png'
-            ),
-            array('name' => JText::_('COM_OSTOOLBAR_HELP'), 'view' => 'help', 'icon' => 'icon-help.png')
+            )
         );
         return $views;
     }
