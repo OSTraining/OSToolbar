@@ -29,7 +29,7 @@ class OstoolbarViewTutorials extends OstoolbarViewAdmin
         $this->filters = $this->model->getFilters($this->rows);
 
         $params = JComponentHelper::getParams('com_ostoolbar');
-        if (OstoolbarRequest::$isTrial) {
+        if (OstoolbarRequest::isTrial()) {
             if ($params->get('api_key')) {
                 JFactory::getApplication()->enqueueMessage(JText::_('COM_OSTOOLBAR_API_KEY_INVALID'), 'error');
             }

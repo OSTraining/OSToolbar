@@ -54,16 +54,6 @@ abstract class OstoolbarCache
         $cachetime   = $conf->get('config.cachetime');
 
         $cache = JFactory::getCache(static::CACHE_GROUP, 'callback');
-
-        $key_error = false;
-        $response  = OstoolbarRequest::makeRequest(array('resource' => 'checkapi'));
-        if ($response->hasError() || $response->getBody() == 0) {
-            $key_error = true;
-            $cache     = JFactory::getCache(static::CACHE_GROUP . "_trial", 'callback');
-            OstoolbarRequest::$isTrial = true;
-
-        }
-
         if ($overrideConfig) {
             $cache->setCaching(1); //enable caching
         }
@@ -87,7 +77,7 @@ abstract class OstoolbarCache
             }
         }
         if (get_class($object) == "OSToolbarModelTutorial" && !empty($data)) {
-            $data->jversion = $key_error ? "1.6_trial" : "1.6";
+            $data->jversion =  OstoolbarRequest::isTrial() ? '1.6_trial' : '1.6';
         }
 
         if ($overrideConfig) {

@@ -11,12 +11,12 @@ defined('_JEXEC') or die();
 abstract class OstoolbarRequest
 {
     protected static $hostUrl = 'https://www.ostraining.com/';
-    public static    $isTrial = false;
+    protected static    $trial = null;
 
     public static function getHostUrl()
     {
         $version = version_compare(JVERSION, '3', 'ge') ? '3.0' : '1.6';
-        $trial   = static::$isTrial ? '_trial' : '';
+        $trial   = static::$trial ? '_trial' : '';
 
         $vars = array(
             'option' => 'com_api',
@@ -24,6 +24,17 @@ abstract class OstoolbarRequest
         );
 
         return self::$hostUrl . 'index.php?' . http_build_query($vars);
+    }
+
+    public static function isTrial()
+    {
+        if (static::$trial === null) {
+            $response  = OstoolbarRequest::makeRequest(array('resource' => 'checkapi'));
+            if ($response->hasError()) {
+                static::$trial = true;
+            }
+        }
+        return static::$trial;
     }
 
     public static function makeRequest($data)
