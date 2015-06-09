@@ -51,6 +51,6 @@ class OstoolbarModelTutorial extends OstoolbarModel
         $body->jversion = $urlQuery['v'];
         // End terribleness
 
-        return $response->getBody();
+        return $body;
     }
 }
